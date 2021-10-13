@@ -4,6 +4,9 @@
 [![pipeline status][pipeline-badge]][commits-gl]
 [![coverage report][coverage-badge]][commits-gl]
 
+
+# INFORMASI Di Bawah Digunakan Untuk Menginisialisasi Repo. Abaikan Saja
+
 Repositori ini berisi sebuah templat untuk membuat proyek Django yang siap
 di-*deploy* ke Heroku melalui GitHub Actions atau GitLab CI.
 
