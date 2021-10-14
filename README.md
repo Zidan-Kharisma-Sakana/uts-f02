@@ -20,27 +20,27 @@ Aplikasi ini bertujuan untuk meningkatkan produktivitas dari para penggunanya de
 
 ## Persona
 User persona dari website ini hanya ada dua, yaitu:
-User yang belum login. User belum dapat mengakses fitur apa pun, kecuali melihat laman anonymous message setiap user. Untuk menggunakan fitur lainnya diperlukan login terlebih dahulu.
-User yang sudah login. User ini akan diberikan akses untuk menikmati semua fitur yang ada di web untuk mengatur kegiatan sehari-harinya dan meningkatkan produktivitas. 
+- **User yang belum login**. User belum dapat mengakses fitur apa pun, kecuali melihat laman anonymous message setiap user. Untuk menggunakan fitur lainnya diperlukan login terlebih dahulu.
+- **User yang sudah login**. User ini akan diberikan akses untuk menikmati semua fitur yang ada di web untuk mengatur kegiatan sehari-harinya dan meningkatkan produktivitas. 
 
-## Modules dan Pembagiannya
-|No |Modul          |Deskripsi                                                                                    |PJ Modul |
-|---|-----------------|---------------------------------------------------------------------------------------------|--------|
-|1  |User             |Mengisi dan update profile                                                                   |Zidan   |
-|   |                 |Autentikasi (login user)                                                                     |         
-|   |                 |Direct Message (opsional)                                                                    |        |
-|2  |To-do List       |User dapat input list hal-hal yang akan dilakukan beserta tenggat waktunya                   |Shabrina|
-|   |                 |To do list akan diurutkan berdasarkan list yang memiliki tenggat waktu terdekat              |        |
-|   |                 |Kemudian setelah di input, user dapat men-checklist hal yang telah dilakukan                 |        |
-|3  |Notes            |Mirip dengan samsung notes                                                                   |Reyza   |
-|   |                 |User bisa mensortir notes yang dibuat berdasarkan tanggal, judul, atau finished / on progress|         
-|   |                 |Ada fitur remove notes                                                                       |        |
-|4  |Schedule         |Jadwal seperti Google Calendar                                                               |Isyah   |
-|   |                 |Ada labelling untuk membedakan jadwal matkul dan jadwal kegiatan biasa                       |        |
-|   |                 |Dapat melihat detail jadwal melalui pop up                                                   |        |
-|5  |Community Forum  |Berisi seperti open chat untuk seluruh user                                                  |Fauzul  |
-|   |                 |User dapat mengirimkan berupa teks dan gambar ke dalam forum                                 |        |
-|6  |Anonymous Message|User bisa kirim pertanyaan anonim ke user lain berupa teks/gambar                            |Fathan  |
-|   |                 |Setiap user bisa memiliki banyak anonymous message sekaligus dan setiap user berbeda-beda    |        |
-|   |                 |Jawaban anonymous message setiap user bisa terlihat secara ke user maupun non-user           |        |
-|7  |News             |User bisa request untuk publish blog/news lewat page news, lalu admin web yang verifikasi    |Nasywa  |
+## Modul dan Pembagiannya
+|No |Modul            |Deskripsi                                                                                  |PJ Modul|
+|---|-----------------|-------------------------------------------------------------------------------------------|--------|
+|1  |User             |Mengisi dan update profile                                                                 |Zidan   |
+|   |                 |Autentikasi (login user)                                                                   |        |
+|   |                 |Direct Message (opsional)                                                                  |        |
+|2  |To-do List       |User dapat input list hal-hal yang akan dilakukan beserta tenggat waktunya                 |Shabrina|
+|   |                 |To do list akan diurutkan berdasarkan list yang memiliki tenggat waktu terdekat            |        |
+|   |                 |User dapat men-checklist hal yang telah dilakukan                                          |        |
+|3  |Notes            |Mirip dengan samsung notes                                                                 |Reyza   |
+|   |                 |User bisa mensortir notes yang dibuat berdasarkan tanggal, judul, atau finished/on progress|        | 
+|   |                 |Ada fitur remove notes                                                                     |        |
+|4  |Schedule         |Jadwal seperti Google Calendar                                                             |Isyah   |
+|   |                 |Ada labelling untuk membedakan jadwal matkul dan jadwal kegiatan biasa                     |        |
+|   |                 |Dapat melihat detail jadwal melalui pop up                                                 |        |
+|5  |Community Forum  |Berisi seperti open chat untuk seluruh user                                                |Fauzul  |
+|   |                 |User dapat mengirimkan berupa teks dan gambar ke dalam forum                               |        |
+|6  |Anonymous Message|User bisa kirim pertanyaan anonim ke user lain berupa teks/gambar                          |Fathan  |
+|   |                 |Setiap user bisa memiliki banyak anonymous message sekaligus dan setiap user berbeda-beda  |        |
+|   |                 |Jawaban anonymous message setiap user bisa terlihat secara ke user maupun non-user         |        |
+|7  |News             |User bisa request untuk publish blog/news lewat page news, lalu admin web yang verifikasi  |Nasywa  |
