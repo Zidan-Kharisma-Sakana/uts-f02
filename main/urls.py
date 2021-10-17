@@ -6,4 +6,5 @@ app_name = 'main'
 
 urlpatterns = [
     path('', views.home, name='home'),
+    path('anonymousmessage/', views.anonymous_page, name='anonymous_page'),
 ]

@@ -40,7 +40,7 @@ User persona dari website ini hanya ada dua, yaitu:
 |   |                 |Dapat melihat detail jadwal melalui pop up                                                 |        |
 |5  |Community Forum  |Berisi seperti open chat untuk seluruh user                                                |Fauzul  |
 |   |                 |User dapat mengirimkan berupa teks dan gambar ke dalam forum                               |        |
-|6  |Anonymous Message|User bisa kirim pertanyaan anonim ke user lain berupa teks/gambar                          |Fathan  |
+|6  |Anonymous Message|User bisa kirim pertanyaan anonim ke user lain berupa teks                          |Fathan  |
 |   |                 |Setiap user bisa memiliki banyak anonymous message sekaligus dan setiap user berbeda-beda  |        |
 |   |                 |Jawaban anonymous message setiap user bisa terlihat secara ke user maupun non-user         |        |
 |7  |News             |User bisa request untuk publish blog/news lewat page news, lalu admin web yang verifikasi  |Nasywa  |
