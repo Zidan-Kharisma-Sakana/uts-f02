@@ -1,0 +1,30 @@
+{% extends "base.html" %} 
+{% block content %} 
+<div class="flex justify-between">
+<h1>Profile</h1>
+<a href={% url 'user' %}> <button class="btn btn-danger">Go Back</button> </a>
+</div>
+    <form action="{% url 'edit-profile'%}" method="POST">
+        {% csrf_token %}
+    <table>
+        <tr>
+            <td><h5> <label for="name">Name: </label> </h5></td>
+            <td> <input type="text" name="name" maxLength="200" autofocus required value={{profile.name}} > </td>
+        </tr>
+        <tr>
+            <td><h5>Email: </h5></td>
+            <td> {{ profile.email }} </td>
+        </tr>
+        <tr>
+            <td><h5> <label for="birthday"> Birthday: </label> </h5></td>
+            <td> <input type="date" name="birthday" autofocus required value={{profile.birthday|date:'Y-m-d'}} > </td>
+        </tr>
+    </table>
+    <h3>About Me:</h3>
+    <textarea name="bio" id="" cols="30" rows="10"> {{profile.bio}} </textarea>
+    <div>
+        <input type="submit" value="Save" class="btn btn-primary">
+    </div>
+
+    </form>
+{% endblock content %}

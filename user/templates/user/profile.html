@@ -1,0 +1,28 @@
+{% extends "base.html" %} 
+{% block content %} 
+<div class="flex justify-between">
+<h1>Profile</h1>
+<a href={% url 'edit-profile' %}> <button class="btn btn-primary">edit profile</button> </a>
+</div>
+    <table>
+        <tr>
+            <td><h5>Name: </h5></td>
+            <td> {{ profile.name }} </td>
+        </tr>
+        <tr>
+            <td><h5>Email: </h5></td>
+            <td> {{ profile.email }} </td>
+        </tr>
+        <tr>
+            <td><h5>Birthday: </h5></td>
+            <td> {{ profile.birthday|date:"SHORT_DATE_FORMAT" }} </td>
+        </tr>
+    </table>
+    <h3>About Me:</h3>
+    <p>{{ profile.bio }}</p>
+    <form action="{% url 'logout'%}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="Logout" class="btn btn-dark">
+
+    </form>
+{% endblock content %}
