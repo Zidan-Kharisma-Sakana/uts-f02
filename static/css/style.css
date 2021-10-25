@@ -2,6 +2,50 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap');
 
+/* File CSS ini hanya untuk base html, 404, dan partials saja
+gunakan block custom_css untuk memasukan file css custom
+kalian */
+
 body {
   font-family: 'Rubik', sans-serif;
+  background: rgb(220,220,220);
+}
+#content{
+  min-height: 100vh;
+  padding: 4rem 8rem;
+  width: 90%;
+  background: rgb(240,240,240);
+  margin: 2rem auto;
+}
+.logo{
+  width: 8rem;
+  height: 8rem;
+  border-radius: 100px;
+  border: 2px solid rgb(220,220,220);
+}
+nav{
+  background: rgb(200,200,200);
+}
+footer{
+  background: rgb(200,200,200);
+  color: gray;
+}
+/* untuk screen dengan ukuran lebar 1024 px kebawah */
+@media only screen and (max-width: 1024px) {
+  #content {
+    padding: 4rem 8rem;
+  }
+  
+}
+
+/* untuk screen dengan ukuran lebar 768 px kebawah */
+@media only screen and (max-width: 768px) {
+  #content {
+    padding: 4rem 8rem;
+    width: 100%;
+    margin: 0rem auto; 
+    /* Ini akan mengoverride "  
+    margin: 2rem auto;"  yang dideklarasikan 
+    sebelumnya khusus untuk layar di bawah 768px */
+  }
 }
