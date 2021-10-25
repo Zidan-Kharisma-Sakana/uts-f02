@@ -3,6 +3,9 @@ from . import class_views
 from . import views
 urlpatterns = [
     path('', views.home, name='user'),
+    path('profile/', views.MyStatusView.as_view(), name='status'),
+    path('profile/<str:name>', views.OtherStatusView.as_view(), name="status-other"),
+    path('status/like', views.LikeStatusView.as_view() ,name='like-status'),
     path('login/', class_views.MyUserLoginView.as_view() , name='login'),
     path('logout/', class_views.MyLogoutView.as_view() , name='logout'),
     path('create/', class_views.MyCreateUserView.as_view() , name='create-user'),
