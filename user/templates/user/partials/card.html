@@ -1,0 +1,81 @@
+<div class="friend-card">
+<div class="row">
+
+{% if friend %}
+    <span class="col-sm-7">Nama: 
+    {{ name }}
+    </span>
+    <div class="col-sm d-flex flex-row-reverse">
+    <form action="" method="POST"  onsubmit="return confirm('Do you really want to unfriend {{ name }}?');">
+        {% csrf_token %}
+        <input type="text" hidden name="_method" value="delete_friend">
+        <input type="text" hidden name="name" value="{{ name }}">
+        <button type="submit" class="btn btn-danger">
+            <i class="bi bi-trash"></i>
+        </button>
+    </form>
+    </div>
+{% endif %}
+
+
+{% if invitation %}
+{% if pending %}
+{% comment %} Untuk pending card, bisa hapus invitation {% endcomment %}
+    <span class="col-sm-7">To: {{ name }}</span>
+    <div class="col-sm d-flex flex-row-reverse">
+        <form action="" method="POST" onsubmit="return confirm('Do you really want to cancel invitation to {{ name }}?">
+            {% csrf_token %}
+            <input type="text" hidden name="name" value="{{ name }}">
+            <input type="text" hidden name="_method" value="delete_invitation">
+            <button type="submit" class="btn btn-danger" >
+                <i class="bi bi-trash"></i>
+            </button>
+        </form>
+    </div>
+{% else %}
+        {% comment %} Untuk inbox_card, bisa decline atau accept {% endcomment %}
+    <span class="col-sm-7">From: {{ name }}</span>
+    <div class="col-sm d-flex flex-row-reverse">
+        <form action="" method="POST" onsubmit="return confirm('Do you really want to decline {{ name }} invitation?');">
+            {% csrf_token %}
+            <input type="text" hidden name="name" value="{{ name }}">
+            <input type="text" hidden name="_method" value="decline">
+            <button type="submit" class="btn btn-danger" >
+                <i class="bi bi-trash"></i>
+            </button>
+        </form>
+        <form action="" method="POST" class="col">
+            {% csrf_token %}
+            <input type="text" hidden name="name" value="{{ name }}">
+            <input type="text" hidden name="_method" value="accept">
+            <button type="submit" class="btn btn-success" >
+                <i class="bi bi-check-lg"></i>
+            </button>
+        </form>
+    </div>
+{% endif %}
+{% endif %}
+
+</div>
+<div class="">
+{% if invitation %}
+
+<h6>Message:</h6>
+<p>{{ message }}</p>
+
+{% else %}
+
+<h6>Latest status:</h6>
+{% if latest == '' %}
+<p>{{ name }} haven't made any status yet</p>
+{% else %}
+<p>{{ latest }}</p>
+{% endif %}
+{% endif %}
+</div>
+<div>
+<a href={% url 'status-other' name=name %}>
+<button class="btn btn-success">Look Profile</button>
+</a>
+</div>
+<div>

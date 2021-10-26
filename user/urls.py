@@ -3,8 +3,10 @@ from . import class_views
 from . import views
 urlpatterns = [
     path('', views.home, name='user'),
+    path('friends/', views.FriendsView.as_view(), name="friends"),
     path('profile/', views.MyStatusView.as_view(), name='status'),
     path('profile/<str:name>', views.OtherStatusView.as_view(), name="status-other"),
+    path('profile/invitation/<str:name>', views.CreateInvitationView.as_view(), name="invitation"),
     path('status/like', views.LikeStatusView.as_view() ,name='like-status'),
     path('login/', class_views.MyUserLoginView.as_view() , name='login'),
     path('logout/', class_views.MyLogoutView.as_view() , name='logout'),

@@ -5,7 +5,10 @@
   <link rel="stylesheet" href="{% static 'css/user/status.css' %}" />
 {% endblock custom_css %}
 {% block content %}
-
+{% if form %}
+{% else %}
+{% include 'user/partials/modal.html' with name=owner %}
+{% endif %}
 {% include 'user/profile.html' with dataProfile=dataProfile form=form %}
 <div class="pembatas"></div>
 {% if form %}

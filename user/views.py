@@ -1,5 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http.response import HttpResponseRedirect, JsonResponse
+from django.http.response import HttpResponseNotFound, HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -12,19 +12,14 @@ from django.utils.dateparse import parse_date
 from django.http.response import Http404, HttpResponse
 from django.core import serializers
 
+import user
+
 
 @login_required(login_url='/user/login/')
 def home(request):
     if request.user.is_superuser:
         return HttpResponseRedirect('/admin/')
     return HttpResponseRedirect(reverse('status'))    
-
-    user_id = request.user.id # Mendapatkan id user 
-    # user = User.objects.get(id=user_id) #mencari objek user berdasarkan id user
-    # print(user.profile)
-    # return render(request, 'user/profile.html', {
-    #     'profile': user.profile
-    # })
 
 @login_required(login_url='/user/login/')
 def edit_profile(request):
@@ -34,7 +29,6 @@ def edit_profile(request):
     user_id = request.user.id        # Mendapatkan id user 
     user = User.objects.get(id=user_id)      #mencari objek user berdasarkan id user
     data = request.POST               # data adalah dictionary yang key-valuenya adalah nama input dan isinya 
-    print(data) 
 
     if(request.method == 'POST'):    # Akan dijalankan bila methodnya POST
         user_profile = models.Profile.objects.get(user=user)  # Mendapatkan profile berdasarkan user
@@ -57,20 +51,14 @@ class LikeStatusView(LoginRequiredMixin, View):
         status_id = request.POST.get('status_id')
         status = models.UserStatus.objects.get(id=status_id)
         liker = status.liker
-        print("----")
         liker_filtered = liker.filter(user=user)
-        print("----")
         if liker_filtered.count() > 0:
-            print("---ss-")
             isDislike=True
             liker.remove(user.profile)
-            print("----")
 
         else:
             isDislike=False
-            print("----")
             liker.add(user.profile)
-            print("----")
         totalCount = status.liker.all().count()
         json_object = JsonResponse({"isDislike":isDislike, "totalCount": totalCount})
         return json_object
@@ -95,6 +83,137 @@ class OtherStatusView(LoginRequiredMixin, View):
             'owner': status_owner.name,
             'dataProfile': status_owner
         })
+
+# create invitation
+class CreateInvitationView(LoginRequiredMixin, View):
+    def post(self, request, name):
+        if request.user.is_superuser:
+            return HttpResponseRedirect('/admin/')
+        user_id = request.user.id
+        inviter = User.objects.get(id=user_id).profile
+        if name == inviter.name:
+            return HttpResponseRedirect(reverse('status'))
+        invitee = models.Profile.objects.get(name=name)
+        data = request.POST
+        print(data)
+        message = data.get('message')
+        if message == '':
+            message = 'Hi! Nice to meet you'
+        if len(message) > 200:
+            message = message[0:200]
+        count1 = models.Invitation.objects.filter(inviter=inviter, invitee=invitee).count()
+        count2 = models.Invitation.objects.filter(inviter=invitee, invitee=inviter).count()
+        if count1 == 0 and count2 == 0:
+            new_invitation = models.Invitation(inviter=inviter, invitee=invitee, message=message)
+            new_invitation.save()
+        return HttpResponseRedirect(reverse('friends'))
+
+# see friends, accept invitation, decline 
+# invitation, retract invitation
+class FriendsView(LoginRequiredMixin, View):
+    def get(self, request):
+        if request.user.is_superuser:
+            return HttpResponseRedirect('/admin/')
+        
+        user_id = request.user.id
+        user_profile = User.objects.get(id=user_id).profile
+        pending_invitation = models.Invitation.objects.filter(inviter=user_profile, isAccepted=False)
+        inbox_invitation = models.Invitation.objects.filter(invitee=user_profile, isAccepted=False)
+        friends = models.Invitation.objects.filter(invitee=user_profile, isAccepted=True) | models.Invitation.objects.filter(inviter=user_profile, isAccepted=True)
+        print(pending_invitation)
+        print(inbox_invitation)
+        pending_invitation = add_name(pending_invitation, user_profile.name, 0)
+        inbox_invitation=add_name(inbox_invitation, user_profile.name, 1)
+        friends = add_name(friends, user_profile.name, 2)
+        print(pending_invitation)
+        print(inbox_invitation)
+        return render(request, 'user/profile/friends.html', {
+            'pending_invitation': pending_invitation,
+            'friends': friends,
+            'inbox_invitation':inbox_invitation,
+            'name': user_profile,
+        })
+
+    def post(self, request):
+        if request.user.is_superuser:
+            return HttpResponseRedirect('/admin/')
+        user_id = request.user.id
+        user_profile = User.objects.get(id=user_id).profile
+        method = request.POST.get('_method') 
+        if method is None:
+            return
+        
+        target_name = request.POST.get('name')
+        target_profile = models.Profile.objects.get(name=target_name)
+        # To delete invitation sent
+        print("---------")
+        if method == 'delete':
+            updateInvitation(user_profile, target_profile, True)
+            return HttpResponseRedirect(reverse('friends'))
+        if method == 'accept':
+            # to accept invitation
+            updateInvitation(target_profile, user_profile, False)
+            return HttpResponseRedirect(reverse('friends'))
+        # To decline invitation or delete friend
+        if method == 'decline':
+            updateInvitation(target_profile, user_profile, True)
+            return HttpResponseRedirect(reverse('friends'))
+        # to delete friend
+        updateInvitation(user_profile, target_profile, True)
+        updateInvitation(target_profile, user_profile, True)
+        return HttpResponseRedirect(reverse('friends'))
+
+
+def add_name(queryset, name, kode):
+    res = []
+    # Pending
+    if kode == 0:
+        for invitation in queryset:
+            r = {'name':'', 'message':''}
+            r['name'] = invitation.invitee.name
+            r['message'] = invitation.message
+            res.append(r)
+    # inbox
+    elif kode == 1:
+        for invitation in queryset:
+            r = {'name':'', 'message':''}
+            r['name'] = invitation.inviter.name
+            r['message'] = invitation.message
+            res.append(r)
+    # friends name
+    else:
+        for invitation in queryset:
+            y = invitation.inviter.name
+            if y != name:
+                r = {'name':'', 'latest':''}
+                inviter_profile =invitation.inviter
+                r['name'] = inviter_profile.name
+                statusLists = models.UserStatus.objects.filter(user=inviter_profile).order_by('-time')
+                if statusLists.count() == 0:
+                    r['latest'] = False
+                else:
+                    r['latest'] = statusLists[0].status
+                res.append(r)
+            else:
+                r = {'name':'', 'latest':''}
+                invitee_profile =invitation.invitee
+                r['name'] = invitee_profile.name
+                statusLists = models.UserStatus.objects.filter(user=invitee_profile).order_by('-time')
+                if statusLists.count() > 0:
+                    r['latest'] = statusLists[0].status
+                res.append(r)    
+    return res
+def updateInvitation(inviter, invitee, isDelete ):
+    invitation = models.Invitation.objects.filter(inviter=inviter, invitee=invitee)
+    if invitation.count()>0:
+        if isDelete:
+            invitation[0].delete()
+        else:
+            invitation1 = models.Invitation.objects.get(inviter=inviter, invitee=invitee)
+            invitation1.isAccepted = True
+            invitation1.save()
+
+
 
 class MyStatusView(LoginRequiredMixin, View):
     def post(self,request):

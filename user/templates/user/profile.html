@@ -13,7 +13,13 @@
 {% if form %}
 <div class="d-flex flex-row-reverse">
 <a href={% url 'edit-profile' %}> <button class="btn btn-primary">edit profile</button> </a>
-<a class="mx-3" href={% url 'status' %}><button class="btn btn-success">Lihat status</button></a>
+<a class="mx-3" href={% url 'friends' %}><button class="btn btn-success">Lihat Teman</button></a>
+</div>
+{% else %}
+<div class="d-flex flex-row-reverse">
+<a><button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  Invite
+</button></a>
 </div>
 {% endif %}
 </div>
