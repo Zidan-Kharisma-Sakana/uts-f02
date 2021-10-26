@@ -1,0 +1,42 @@
+<div class="profile">
+<div class="w-100 d-flex flex-row-reverse mb-4">
+{% if form %}
+<form action="{% url 'logout'%}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Logout" class="btn btn-danger">
+</form>
+{% endif %}
+
+</div>
+<div class="d-flex flex-column flex-sm-row justify-content-between">
+<h1>Profile</h1>
+{% if form %}
+<div class="d-flex flex-row-reverse">
+<a href={% url 'edit-profile' %}> <button class="btn btn-primary">edit profile</button> </a>
+<a class="mx-3" href={% url 'friends' %}><button class="btn btn-success">Lihat Teman</button></a>
+</div>
+{% else %}
+<div class="d-flex flex-row-reverse">
+<a><button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  Invite
+</button></a>
+</div>
+{% endif %}
+</div>
+    <table>
+        <tr>
+            <td><h5>Name: </h5></td>
+            <td> {{ dataProfile.name }} </td>
+        </tr>
+        <tr>
+            <td><h5>Email: </h5></td>
+            <td> {{ dataProfile.email }} </td>
+        </tr>
+        <tr>
+            <td><h5>Birthday: </h5></td>
+            <td> {{ dataProfile.birthday|date:"SHORT_DATE_FORMAT" }} </td>
+        </tr>
+    </table>
+    <h3>About Me:</h3>
+    <p>{{ dataProfile.bio }}</p>
+</div>
