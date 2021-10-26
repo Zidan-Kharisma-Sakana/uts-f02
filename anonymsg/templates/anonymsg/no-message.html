@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>No Messages Exist!</title>
+{% endblock meta %}
+
+{% block content %}
+<h1>No Messages Exist!</h1>
+<a href={% url 'main:home' %} class="btn btn-primary">Return to home</a>
+{% endblock content %}
