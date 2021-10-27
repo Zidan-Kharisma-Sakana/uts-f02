@@ -33,7 +33,7 @@ footer{
 /* untuk screen dengan ukuran lebar 1024 px kebawah */
 @media only screen and (max-width: 1024px) {
   #content {
-    padding: 4rem 8rem;
+    padding: 2rem 4rem;
   }
   
 }
@@ -41,7 +41,7 @@ footer{
 /* untuk screen dengan ukuran lebar 768 px kebawah */
 @media only screen and (max-width: 768px) {
   #content {
-    padding: 4rem 8rem;
+    padding: 1rem 0.5rem;
     width: 100%;
     margin: 0rem auto; 
     /* Ini akan mengoverride "  
