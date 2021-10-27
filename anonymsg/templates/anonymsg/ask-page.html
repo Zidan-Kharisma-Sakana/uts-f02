@@ -8,16 +8,8 @@
 {% block content %}
 <h1>Ask a Question</h1>
 
-<form action="{% url 'ask-page' %}" method="POST">
+<form action="{% url 'ask-page' message_user_profile.name %}" method="POST">
     {% csrf_token %}
-    <!-- <h5>Select question you want to answer:</h5>
-    <select name="user">
-        {% if profile_list %}
-        {% for user in profile_list %}
-        <option value="{{ user }}">{{ user.name }}</option>
-        {% endfor %}
-        {% endif %}
-    </select> -->
     <h5><label for="anonymous_question">Type in your question:</label></h5>
     <textarea name="anonymous_question" rows="10" cols="40" placeholder="Type your message here..."></textarea>
     <div>

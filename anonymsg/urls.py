@@ -2,8 +2,13 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path("", views.anonymous_page, name="anonymous-page"),
+    path("", views.home, name="anonymsg"),
+    path("list-message", views.MyAnonymousView.as_view(), name="anonymous-page"),
     path("edit-message", views.edit_message, name="edit-message"),
-    path("no-message", views.edit_message, name="no-message"),
-    path("ask-page", views.ask_page, name="ask-page"),
+    path(
+        "list-message/<str:name>",
+        views.OtherAnonymousView.as_view(),
+        name="anonymous-page-other",
+    ),
+    path("ask-page/<str:name>", views.AskView.as_view(), name="ask-page"),
 ]

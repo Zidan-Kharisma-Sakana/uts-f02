@@ -2,12 +2,11 @@
 {% load static %}
 
 {% block meta %}
-<title>Anonymous Message</title>
+<title>{{ message_user_profile.name }}'s Anonymous Messages </title>
 {% endblock meta %}
 
 {% block content %}
-<h1>Anonymous Messages</h1>
-
+<h1>{{ message_user_profile.name }}'s Anonymous Messages</h1>
 {% if messages %}
 {% for message in messages %}
 <div class="card">
@@ -21,7 +20,10 @@
 <br>
 {% endfor %}
 {% endif %}
+{% if not other_view %}
 <a href={% url 'edit-message' %}><button class="btn btn-primary">Edit</button></a>
-<a href={% url 'ask-page' %} class='btn btn-warning' id="questionbutton">Ask a Question!</a>
+{% else %}
+<a href={% url 'ask-page' message_user_profile.name %} class='btn btn-warning' id="questionbutton">Ask a Question!</a>
+{% endif %}
 
 {% endblock content %}
