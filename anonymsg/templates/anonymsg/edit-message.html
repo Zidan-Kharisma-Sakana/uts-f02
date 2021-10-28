@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Edit Anonymous Message</title>
+{% endblock meta %}
+
+{% block content %}
+<h1>Edit Anonymous Message</h1>
+<form action="{% url 'edit-message' %}" method="POST">
+    {% csrf_token %}
+    <h5>Select question you want to answer:</h5>
+    <select name="anonymous_question">
+        {% if messages %}
+        {% for message in messages %}
+        <option value="{{ message.anonymous_question }}">{{ message.anonymous_question }}</option>
+        {% endfor %}
+        {% endif %}
+    </select>
+    <h5><label for="anonymous_answer">Type in your response:</label></h5>
+    <textarea name="anonymous_answer" rows="10" cols="40" placeholder="Type your message here..."></textarea>
+    <div>
+        <input type="submit" name="finalize" value="Save" class="btn btn-success">
+        <input type="submit" name="finalize" value="Delete" class="btn btn-danger">
+    </div><br>
+    <a href={% url 'anonymous-page' %} class="btn btn-primary">Go Back...</a>
+</form>
+{% endblock content %}
