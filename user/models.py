@@ -15,7 +15,7 @@ class Profile(models.Model):
         return self.name
 
 class UserStatus(models.Model):
-    user = models.ForeignKey(Profile, on_delete=models.CASCADE,)
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="posted_status")
     status = models.CharField(max_length=200)
     time = models.DateTimeField(auto_now_add=True)
     liker = models.ManyToManyField('Profile', related_name="liked_status")

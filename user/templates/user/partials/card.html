@@ -2,18 +2,16 @@
 <div class="row">
 
 {% if friend %}
-    <span class="col-sm-7">Nama: 
-    {{ name }}
-    </span>
+    <span class="col-sm-7">Nama: {{ name }} </span>
     <div class="col-sm d-flex flex-row-reverse">
-    <form action="" method="POST"  onsubmit="return confirm('Do you really want to unfriend {{ name }}?');">
-        {% csrf_token %}
-        <input type="text" hidden name="_method" value="delete_friend">
-        <input type="text" hidden name="name" value="{{ name }}">
-        <button type="submit" class="btn btn-danger">
-            <i class="bi bi-trash"></i>
-        </button>
-    </form>
+        <form action="" method="POST"  onsubmit="return confirm('Do you really want to unfriend {{ name }}?');">
+            {% csrf_token %}
+            <input type="text" hidden name="_method" value="delete_friend">
+            <input type="text" hidden name="name" value="{{ name }}">
+            <button type="submit" class="btn btn-danger">
+                <i class="bi bi-trash"></i>
+            </button>
+        </form>
     </div>
 {% endif %}
 
@@ -57,25 +55,22 @@
 {% endif %}
 
 </div>
-<div class="">
-{% if invitation %}
-
-<h6>Message:</h6>
-<p>{{ message }}</p>
-
-{% else %}
-
-<h6>Latest status:</h6>
-{% if latest == '' %}
-<p>{{ name }} haven't made any status yet</p>
-{% else %}
-<p>{{ latest }}</p>
-{% endif %}
-{% endif %}
+    <div class="">
+    {% if invitation %}
+        <h6>Message:</h6>
+        <p>{{ message }}</p>
+    {% else %}
+        <h6>Latest status:</h6>
+        {% if latest == '' %}
+            <p>{{ name }} haven't made any status yet</p>
+        {% else %}
+            <p>{{ latest }}</p>
+        {% endif %}
+    {% endif %}
+    </div>
+    <div class="">
+        <a href={% url 'status-other' name=name %}>
+            <button class="btn btn-success">Look Profile</button>
+        </a>
+    </div>
 </div>
-<div>
-<a href={% url 'status-other' name=name %}>
-<button class="btn btn-success">Look Profile</button>
-</a>
-</div>
-<div>
