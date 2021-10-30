@@ -43,7 +43,7 @@ HEROKU_APP_NAME = os.getenv('HEROKU_APP_NAME', '')
 ALLOWED_HOSTS = [f'{HEROKU_APP_NAME}.herokuapp.com']
 
 if not PRODUCTION:
-    ALLOWED_HOSTS += ['.localhost', '127.0.0.1', '[::1]']
+    ALLOWED_HOSTS += ['.localhost', '127.0.0.1', '[::1]', '*']
 
 
 # Application definition
@@ -56,7 +56,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
-    'user'
+    'user',
+    'dm'
 ]
 
 MIDDLEWARE = [
@@ -90,6 +91,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'utsF02.wsgi.application'
+ASGI_APPLICATION = 'utsF02.routing.application'
 
 
 # Database
@@ -100,6 +102,15 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
+}
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
 }
 
 # Set database settings automatically using DATABASE_URL.
