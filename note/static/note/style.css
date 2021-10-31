@@ -1,15 +1,8 @@
-
-
 body{margin-top:20px;}
-
-
-
 
 ul.notes li {
   margin: 10px 40px 50px 0px;
   float: left;
-  font-size: 14px;
-  
 }
 
 ul.notes li, ul.tag-list li {
@@ -24,33 +17,25 @@ ul.notes li div small {
 }
 
 ul.notes li div h4 {
-
   font-size: 20px;
-  width: 195px;
+  width: 190px;
   height: 20px;
   overflow: hidden;
 
 }
 
-
-
-.note_content :hover  {
-
-  overflow-y:scroll ;
- 
-}
-
-
-.note_content {
-
-  font-size: 16px;
-  width: 180px;
-  height: 100px;
-  overflow:hidden;
-  z-index: -1;
+ul.notes li div p {
   
+  height: 100px;
+  width: 180px;
+  font-size: 14px;
+  overflow: hidden;
 }
 
+ul.notes li div p  :hover{
+  
+  overflow-y: scroll;
+}
 
 div.rotate-1 {
   -webkit-transform: rotate(-6deg);
@@ -99,10 +84,4 @@ ul.notes li div {
   -moz-transition: -moz-transform 0.15s linear;
   -o-transition: -o-transform 0.15s linear;
   -webkit-transition: -webkit-transform 0.15s linear;
-  
 }
-
-
-
- 
-
