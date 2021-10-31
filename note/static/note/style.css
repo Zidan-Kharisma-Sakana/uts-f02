@@ -1,3 +1,5 @@
+
+
 body{margin-top:20px;}
 
 ul.notes li {
@@ -26,7 +28,7 @@ div.rotate-2 {
   -o-transform: rotate(4deg);
   -webkit-transform: rotate(4deg);
   -moz-transform: rotate(4deg);
-  position: relative;
+  position: sticky;
   top: 5px;
 }
 
@@ -64,4 +66,3 @@ ul.notes li div {
   -o-transition: -o-transform 0.15s linear;
   -webkit-transition: -webkit-transform 0.15s linear;
 }
-
