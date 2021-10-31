@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 
 class note(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=30)
+    title = models.CharField(max_length=13)
     timestamp = models.DateTimeField()
     text = models.TextField()
 
