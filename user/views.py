@@ -13,7 +13,7 @@ from django.http.response import Http404, HttpResponse
 from django.core import serializers
 from .utils import updateInvitation, list_status
 import user
-
+from realchat.models import DM
 
 @login_required(login_url='/user/login/')
 def home(request):
@@ -169,6 +169,7 @@ class FriendsView(LoginRequiredMixin, View):
             return HttpResponseRedirect(reverse('friends'))
         if method == 'accept':
             # to accept invitation
+            DM.objects.create(pengundang=target_profile, diundang=user_profile)
             updateInvitation(target_profile, user_profile, False)
             return HttpResponseRedirect(reverse('friends'))
         # To decline invitation or delete friend

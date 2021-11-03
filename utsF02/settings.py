@@ -49,6 +49,7 @@ if not PRODUCTION:
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -57,7 +58,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main',
     'user',
-    'dm'
+    'realchat',
 ]
 
 MIDDLEWARE = [
@@ -90,8 +91,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'utsF02.wsgi.application'
-ASGI_APPLICATION = 'utsF02.routing.application'
+# WSGI_APPLICATION = 'utsF02.wsgi.application'
+ASGI_APPLICATION = 'utsF02.asgi.application'
 
 
 # Database

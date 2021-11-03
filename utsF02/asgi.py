@@ -17,4 +17,16 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'utsF02.settings')
 # application = get_asgi_application()
 # os.environ.setdefault("DJANGO_SETTINGS_MODULE", "django_chatroom.settings")
 django.setup()
-application = get_default_application() 
+# application = get_default_application() 
+
+from channels.auth import AuthMiddlewareStack
+from channels.routing import ProtocolTypeRouter, URLRouter
+import realchat.routing
+
+application = ProtocolTypeRouter({
+    'websocket': AuthMiddlewareStack(
+        URLRouter(
+            realchat.routing.websocket_urlpatterns
+        )
+    ),
+}) 

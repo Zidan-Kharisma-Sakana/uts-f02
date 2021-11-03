@@ -1,0 +1,35 @@
+#chat_box{
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    max-height: 80vh;
+    overflow-y: scroll;
+    border-radius: 5px;
+    border: 1px solid #333;
+    background-color:rgb(250, 250, 250);
+}
+.chat-outer{
+    border-radius: 10px;
+    background-color: snow;
+    border: 1px solid black;
+    padding: .5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    min-width: 30%;
+    max-width: 75%;
+    margin-bottom: 1rem;
+}
+.end{
+    align-self: flex-end;
+}
+.your-title{
+    text-transform: capitalize;
+    text-align: end;
+}
+.their-title{
+    text-transform: capitalize;
+    color: green;
+}
+.isi{
+    color: #333;
+}
