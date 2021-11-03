@@ -11,7 +11,7 @@ from . import models
 from django.utils.dateparse import parse_date
 from django.http.response import Http404, HttpResponse
 from django.core import serializers
-
+from .utils import updateInvitation, list_status
 import user
 
 
@@ -32,8 +32,6 @@ def edit_profile(request):
 
     if(request.method == 'POST'):    # Akan dijalankan bila methodnya POST
         user_profile = models.Profile.objects.get(user=user)  # Mendapatkan profile berdasarkan user
-        print(user_profile)
-        user_profile.name = data['name']      # Mengset field name dengan data baru
         user_profile.birthday = parse_date(data['birthday'])
         user_profile.bio = data['bio']
         user_profile.save() # Menyimpan kembali objek profile 
@@ -117,16 +115,35 @@ class FriendsView(LoginRequiredMixin, View):
         
         user_id = request.user.id
         user_profile = User.objects.get(id=user_id).profile
-        pending_invitation = models.Invitation.objects.filter(inviter=user_profile, isAccepted=False)
-        inbox_invitation = models.Invitation.objects.filter(invitee=user_profile, isAccepted=False)
-        friends = models.Invitation.objects.filter(invitee=user_profile, isAccepted=True) | models.Invitation.objects.filter(inviter=user_profile, isAccepted=True)
-        print(pending_invitation)
-        print(inbox_invitation)
-        pending_invitation = add_name(pending_invitation, user_profile.name, 0)
-        inbox_invitation=add_name(inbox_invitation, user_profile.name, 1)
-        friends = add_name(friends, user_profile.name, 2)
-        print(pending_invitation)
-        print(inbox_invitation)
+        user_name= user_profile.name
+
+        pending_invitation = []
+        pending_invitation_querySet = models.Invitation.objects.select_related('invitee').filter(inviter=user_profile, isAccepted=False)
+        for invitation in pending_invitation_querySet:
+            pending_invitation.append({'message':invitation.message, 'name':invitation.invitee.name})
+
+        inbox_invitation=[]
+        inbox_invitation_querySet = models.Invitation.objects.select_related('inviter').filter(invitee=user_profile, isAccepted=False)
+        for invitation in inbox_invitation_querySet:
+            inbox_invitation.append({'message':invitation.message, 'name':invitation.inviter.name})
+        
+        friends = []        
+        friends_querySet = models.Invitation.objects.select_related('inviter', 'invitee').filter(invitee=user_profile, isAccepted=True) | models.Invitation.objects.filter(inviter=user_profile, isAccepted=True)
+        for invitation in friends_querySet:
+            val = {}
+            inviter_name = invitation.inviter.name
+            if inviter_name != user_name:
+                val['name'] = inviter_name
+                status = invitation.inviter.posted_status.all().order_by('-time')
+                val['latest'] = status[0].status if status.count() > 0 else False
+            else:
+                val['name'] = invitation.invitee.name
+                status = invitation.invitee.posted_status.all().order_by('-time')
+                val['latest'] =  status[0].status if status.count() > 0 else False
+            friends.append(val)
+        
+        print(friends)
+
         return render(request, 'user/profile/friends.html', {
             'pending_invitation': pending_invitation,
             'friends': friends,
@@ -162,58 +179,6 @@ class FriendsView(LoginRequiredMixin, View):
         updateInvitation(user_profile, target_profile, True)
         updateInvitation(target_profile, user_profile, True)
         return HttpResponseRedirect(reverse('friends'))
-
-
-def add_name(queryset, name, kode):
-    res = []
-    # Pending
-    if kode == 0:
-        for invitation in queryset:
-            r = {'name':'', 'message':''}
-            r['name'] = invitation.invitee.name
-            r['message'] = invitation.message
-            res.append(r)
-    # inbox
-    elif kode == 1:
-        for invitation in queryset:
-            r = {'name':'', 'message':''}
-            r['name'] = invitation.inviter.name
-            r['message'] = invitation.message
-            res.append(r)
-    # friends name
-    else:
-        for invitation in queryset:
-            y = invitation.inviter.name
-            if y != name:
-                r = {'name':'', 'latest':''}
-                inviter_profile =invitation.inviter
-                r['name'] = inviter_profile.name
-                statusLists = models.UserStatus.objects.filter(user=inviter_profile).order_by('-time')
-                if statusLists.count() == 0:
-                    r['latest'] = False
-                else:
-                    r['latest'] = statusLists[0].status
-                res.append(r)
-            else:
-                r = {'name':'', 'latest':''}
-                invitee_profile =invitation.invitee
-                r['name'] = invitee_profile.name
-                statusLists = models.UserStatus.objects.filter(user=invitee_profile).order_by('-time')
-                if statusLists.count() > 0:
-                    r['latest'] = statusLists[0].status
-                res.append(r)    
-    return res
-def updateInvitation(inviter, invitee, isDelete ):
-    invitation = models.Invitation.objects.filter(inviter=inviter, invitee=invitee)
-    if invitation.count()>0:
-        if isDelete:
-            invitation[0].delete()
-        else:
-            invitation1 = models.Invitation.objects.get(inviter=inviter, invitee=invitee)
-            invitation1.isAccepted = True
-            invitation1.save()
-
-
 
 class MyStatusView(LoginRequiredMixin, View):
     def post(self,request):
@@ -252,20 +217,27 @@ class MyStatusView(LoginRequiredMixin, View):
             'has_error': False
         })
 
-def list_status(status_owner, user):
-    status_list = models.UserStatus.objects.filter(user=status_owner).order_by('-time')
-    data = []
-    print(status_list)
-    for status in status_list:
-        likes = status.liker.all().count()
-        isLiked = user.liked_status.filter(id=status.id).count() > 0
-        datum = {
-            'name': status_owner.name,
-            'status_id': status.id,
-            'status': status.status,
-            'time': status.time,
-            'likes': likes,
-            'isLiked': isLiked
-        }
-        data.append(datum)
-    return data
+class SearchFriendView(LoginRequiredMixin, View):
+    def get(self, request):
+        if request.user.is_superuser:
+            return HttpResponseRedirect('/admin/')
+        return render(request, 'user/search/search-friend.html', {
+            'name':'',
+            'user': False,
+        })        
+    def post(self, request):
+        if request.user.is_superuser:
+            return HttpResponseRedirect('/admin/')
+        user_id = request.user.id
+        user = User.objects.get(id=user_id).profile
+        searched = request.POST.get('name')
+        if searched is None:
+            searched=""
+        users = models.Profile.objects.filter(name__icontains=searched).order_by("name")
+        users_list = []
+        for user in users:
+            bio = user.bio if user.bio else "-"
+            users_list.append({'name': user.name,'bio': bio})
+
+        return JsonResponse({'data': users_list})
+

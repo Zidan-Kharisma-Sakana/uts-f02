@@ -12,8 +12,9 @@
 <h1>Profile</h1>
 {% if form %}
 <div class="d-flex flex-row-reverse">
-<a href={% url 'edit-profile' %}> <button class="btn btn-primary">edit profile</button> </a>
-<a class="mx-3" href={% url 'friends' %}><button class="btn btn-success">Lihat Teman</button></a>
+<a class="mx-2" href={% url 'edit-profile' %}> <button class="btn btn-primary">edit profile</button> </a>
+<a class="mx-2" href={% url 'friends' %}><button class="btn btn-success">Lihat Teman</button></a>
+<a class="mx-2" href={% url 'search-friend' %}><button class="btn btn-secondary">Search Friend</button></a>
 </div>
 {% else %}
 <div class="d-flex flex-row-reverse">
