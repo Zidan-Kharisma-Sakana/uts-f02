@@ -56,7 +56,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
-    'user'
+    'user',
+    'forum',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -147,6 +149,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Crispy forms
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # This is the directory for storing `collectstatic` results.
 # This shouldn't be included in your Git repository.

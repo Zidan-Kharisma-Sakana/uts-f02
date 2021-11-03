@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block custom_css %}{% endblock custom_css %}
+{% block meta %} {% endblock meta %}
+{% block content %}
+
+    <div class="col-2 offset-5 mt-5">
+            <h1 style="width: 10ch;">Topic List</h1>
+    </div>
+
+    {% if user.is_superuser %}
+        <div id="topic-add">
+            <a href="{% url 'topic-add' %}">
+                tambah
+            </a>
+        </div>
+    {% endif %}
+    <br>
+
+    {% for topic in topics %}
+        <h3>Title: <a href="{% url 'topic-detail' topic.id %}">{{ topic.title }}</a> </h3>
+        <p class="row">Description: {{ topic.description }}</p>
+        <hr>
+    {% endfor %}
+
+{% endblock content %} 
