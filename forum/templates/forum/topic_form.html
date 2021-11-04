@@ -1,5 +1,35 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
+
+{% block meta %}
+<script>
+    $(document).ready(function () {
+        $('#id_title').keyup(function () {
+            $.ajax({
+                data: $(this).serialize(),
+                url: "{% url 'validate_topicname' %}",
+                success: function (response) {
+                    if (response.is_taken == true) {
+                        $('#id_title').removeClass('is-valid').addClass('is-invalid');
+                        $('#id_title').after('<div class="invalid-feedback d-block" id="titleError">This title\'s name has been taken!</div>')
+                    }
+                    else {
+                        $('#id_title').removeClass('is-invalid').addClass('is-valid');
+                        $('#titleError').remove();
+
+                    }
+                },
+                error: function (response) {
+                    console.log(response.responseJSON.errors)
+                }
+            });
+
+            return false;
+        });
+    })
+</script>
+{% endblock %}
+
 {% block content %}
 
     <div class="row">

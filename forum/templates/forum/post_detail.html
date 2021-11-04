@@ -11,7 +11,7 @@
         <div class="card-header">
         </div>
         <div class="card-body">
-            <h5 class="card-title">{{ object.author }}</h5>
+            <h5 class="card-title badge bg-secondary rounded">{{ object.author }}</h5>
             <p class="card-text">{{ object.body }}</p>
             {% if object.author == user %}
                 <a class="btn btn-warning btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}">edit</a>
@@ -27,7 +27,7 @@
     {% for comment in comments %}
         <div class="card w-75">
             <div class="card-body">
-              <h5 class="card-title">{{ comment.author }}</h5>
+              <h5 class="card-title badge bg-secondary rounded">{{ comment.author }}</h5>
               <p class="card-text">{{ comment.body }}</p>
             </div>
         </div>
@@ -44,7 +44,10 @@
                     {{ form|crispy }}
                 </fieldset>
                 <div class="form-group">
-                    <button class="btn btn-primary" type="submit">comment</button>
+                    <div class="container"> <div class="row mt-1">
+                        <div class="col-md-auto"><button id="submit-btn" class="btn btn-info" type="submit">comment</button></div>
+                        <div class="col-md-auto"><button id="hide-btn" class="btn btn-outline-secondary" onclick="loadForm()" style="display: none;">hide</button></div>
+                    </div></div>
                 </div>
             </form>
         </div>
@@ -52,8 +55,15 @@
     
     <script>
         function loadForm(){
-            document.getElementById("reply-btn").style.display="none"
-            document.getElementById("comment-form").style.display="block"
+            if (document.getElementById("reply-btn").style.display != "none"){
+                document.getElementById("reply-btn").style.display="none";
+                document.getElementById("comment-form").style.display="block";
+                document.getElementById("hide-btn").style.display="block";
+            } else {
+                document.getElementById("reply-btn").style.display="block";
+                document.getElementById("comment-form").style.display="none";
+                document.getElementById("hide-btn").style.display="none";
+            }
         }
 
         document.getElementById("div_id_author").style.display="none"

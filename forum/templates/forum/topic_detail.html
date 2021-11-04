@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+
 {% block content %}
 
     <div class="col-2 offset-5 mt-1">
@@ -14,12 +15,14 @@
     {% endif %}
     <br><br>
     
-    <div>
+    <div class="container">
     {% for post in posts %}
         <li class="list-group-item d-flex justify-content-between align-items-start">
-            <div class="ms-2 me-auto">
-            <div class="fw-bold">{{ post.author }}</div>
-            {{ post.title }}
+            <div class="ms-2 me-3">
+                <div class="fw">
+                    <p class="badge bg-secondary rounded">{{ post.author }}</p>
+                </div>
+                {{ post.title }}
             </div>
             <a href="{% url 'post-detail' post.id%}"><span class="badge bg-primary rounded-pill">open</span></a>
         </li>

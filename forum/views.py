@@ -1,4 +1,5 @@
-from django.http.response import HttpResponse, HttpResponseRedirect
+from django.http import response
+from django.http.response import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -32,10 +33,19 @@ class TopicDetailView(DetailView):
 
 class TopicCreateView(LoginRequiredMixin, CreateView):
     model = Topic
+    template_name = 'forum/post_form.html'
     fields = ['title', 'description']
 
     def form_valid(self, form):
         return super().form_valid(form)
+
+def validate_topicname(request):
+    title = request.GET.get('title', None)
+    model = Topic
+    response = {
+        'is_taken' : model.objects.filter(title__iexact=title).exists()
+    }
+    return JsonResponse(response)
 
 class PostDetailView(LoginRequiredMixin, FormMixin, DetailView):
     model = Post
