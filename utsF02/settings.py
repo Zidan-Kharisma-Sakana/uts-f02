@@ -183,3 +183,5 @@ EMAIL_HOST_USER = 'pbp.f02@gmail.com'
 EMAIL_HOST_PASSWORD = 'nico-nico-nii!!'
 EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = 'Admin Django <pbp.f02@gmail.com>'
+
+LOGIN_URL='/user/login/'
