@@ -6,7 +6,7 @@
 {% endblock meta %}
 
 {% block content %}
-<h1>No Messages Exist!</h1>
+<h2>No Messages Exist!</h2>
 {% if other_view %}
 <a href={% url 'ask-page' message_user_profile.name %} class='btn btn-warning' id="questionbutton">Ask a Question!</a>
 {% else %}
