@@ -5,5 +5,6 @@ app_name = "note"
 
 urlpatterns = [
     path("", index, name="index"),
-
+    path('add_message/', add_message, name="add_message"),
+    
 ]
