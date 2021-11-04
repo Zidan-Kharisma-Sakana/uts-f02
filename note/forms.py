@@ -9,4 +9,24 @@ class NoteForm(forms.ModelForm):
 	class Meta:
 		model = NoteModel
 		fields = ('title','timestamp','message')
-	
+
+		
+
+		widgets = {
+			'title': forms.TextInput(
+				attrs = {
+					'class':'form-control',
+					'placeholder':'max 13 character',}
+				),
+			'timestamp': forms.TextInput(
+				attrs = {
+					'class':'form-control',
+					}
+				),
+
+			'message': forms.Textarea(
+				attrs = {
+					'class':'form-control',}
+				),
+
+		}
