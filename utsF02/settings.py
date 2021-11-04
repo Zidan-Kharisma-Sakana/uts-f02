@@ -57,6 +57,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main',
     'todolist',
+    'user',
+    'anonymsg',
 ]
 
 MIDDLEWARE = [
@@ -69,7 +71,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
 ROOT_URLCONF = 'utsF02.urls'
 
 TEMPLATES = [
@@ -165,3 +166,17 @@ for directory in [*STATICFILES_DIRS, STATIC_ROOT]:
 # Enable compression and caching features of whitenoise.
 # You can remove this if it causes problems on your setup.
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# EMAIL_HOST=os.environ.get('EMAIL_HOST')
+# EMAIL_HOST_USER=os.environ.get('EMAIL_HOST_USER')
+# EMAIL_HOST_PASSWORD=os.environ.get('EMAIL_HOST_PASSWORD')
+# EMAIL_USE_TLS=os.environ.get('EMAIL_USE_TLS')
+# EMAIL_PORT=os.environ.get('EMAIL_PORT')
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'pbp.f02@gmail.com'
+EMAIL_HOST_PASSWORD = 'nico-nico-nii!!'
+EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = 'Admin Django <pbp.f02@gmail.com>'
+LOGIN_URL = '/user/login/'

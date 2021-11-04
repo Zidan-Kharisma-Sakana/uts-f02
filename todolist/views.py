@@ -1,9 +1,9 @@
 from django.shortcuts import redirect
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http.response import HttpResponseRedirect
 from django.urls import reverse_lazy
 
@@ -15,14 +15,12 @@ from .forms import ToDoListForm
 
 # Create your views here.
 
-@login_required(login_url="/user/login/")
 def home(request):
     if request.user.is_superuser:
         return HttpResponseRedirect("/admin/")
     return HttpResponseRedirect(reverse_lazy("todolist"))
 
-@login_required(login_url="/user/login/")
-class TaskList(ListView):
+class TaskList(LoginRequiredMixin, ListView):
     model = ToDoList
     context_object_name = 'todolist'
 
@@ -39,12 +37,12 @@ class TaskList(ListView):
 
         return context
 
-class TodoDetail(DetailView):
+class TodoDetail(LoginRequiredMixin, DetailView):
     model = ToDoList
     context_object_name = 'todo'
     template_name = 'todolist/todo.html'
 
-class TodoCreate(CreateView):
+class TodoCreate(LoginRequiredMixin, CreateView):
     model = ToDoList
     fields = ['text', 'description', 'checklist']
     success_url = reverse_lazy('todo_list')
@@ -53,12 +51,12 @@ class TodoCreate(CreateView):
         form.instance.user = self.request.user
         return super(TodoCreate, self).form_valid(form)
 
-class TodoUpdate(UpdateView):
+class TodoUpdate(LoginRequiredMixin, UpdateView):
     model = ToDoList
     fields = ['text', 'description', 'checklist']
     success_url = reverse_lazy('todo_list')
 
-class TodoDelete(DeleteView):
+class TodoDelete(LoginRequiredMixin, DeleteView):
     model = ToDoList
     context_object_name = 'todo_list'
     success_url = reverse_lazy('todo_list')
@@ -79,34 +77,6 @@ class TodoReorder(View):
 
         return redirect(reverse_lazy('todo_list'))
 
-# @login_required(login_url="/user/login/")
-# def index(request):
-#     todolist = ToDoList.objects.order_by('id')
-#     form = ToDoListForm()
-#     context = {'todolist' : todolist, 'form' : form}
-#     return render(request, 'todolist/index.html', context)
-
-# @login_required(login_url="/user/login/")
-# def addToDo(request):
-#     form = ToDoListForm(request.POST)
-
-#     if form.is_valid():
-#         new_todo = ToDoList(text=request.POST['text'])
-#         new_todo.save()
-
-#     return redirect('index')
-
-# def checklistToDo(request, todo_id):
-#     todo = ToDoList.objects.get(pk=todo_id)
-#     todo.checklist = True
-#     todo.save()
-
-#     return redirect('index')
-
-# def deleteChecklist(request):
-#     ToDoList.objects.filter(checklist_exact=True).delete()
-#     return redirect('index')
-
-# def deleteAll(request):
-#     ToDoList.objects.all().delete()
-#     return redirect('index')
+# Referensi :
+# https://www.youtube.com/watch?v=llbtoQTt4qw
+# https://www.youtube.com/watch?v=phHM6glUURw

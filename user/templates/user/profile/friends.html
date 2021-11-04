@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %}
+{% block custom_css %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="{% static 'css/user/friends.css' %}" />
+{% endblock custom_css %}
+
+{% block content %}
+<div class="d-flex flex-row-reverse">
+<a class="mx-2" href={% url 'search-friend' %}><button class="btn btn-secondary">Search Friend</button></a>
+<a class="mx-2" href={% url 'status' %}><button class="btn btn-primary">Back to profile</button></a>
+</div>
+<section>
+<h2>Pending Invitation</h2>
+{% if pending_invitation %}
+    {% for invitation in pending_invitation %}
+        {% include 'user/partials/card.html' with invitation=True pending=True name=invitation.name message=invitation.message %}
+    {% endfor %}
+{% else %}
+    <h5 class="text-center">You haven't send any invitation</h5>
+{% endif %}
+
+</section>
+
+<section>
+<h2>Inbox Invitation</h2>
+{% if inbox_invitation %}
+    {% for invitation in inbox_invitation %}
+    {% include 'user/partials/card.html' with name=invitation.name message=invitation.message invitation=True%}
+    {% endfor %}
+{% else %}
+    <h5 class="text-center">You haven't received any invitation</h5>
+{% endif %}
+</section>
+
+<section>
+<h2>Your Friends List</h2>
+{% if friends %}
+    {% for friend in friends %}
+    {% include 'user/partials/card.html' with name=friend.name latest=friend.latest friend=True %}
+    {% endfor %}
+{% else %}
+    <h5 class="text-center">You haven't make any friends</h5>
+{% endif %}
+</section>
+
+{% endblock content %}
+
