@@ -3,23 +3,31 @@
 {% block meta %} {% endblock meta %}
 {% block content %}
 
-    <div class="col-2 offset-5 mt-5">
-            <h1 style="width: 10ch;">Topic List</h1>
+    <div class="col-2 offset-5 mt-1">
+        <h1 style="width: 10ch;">Topic List</h1>
     </div>
 
     {% if user.is_superuser %}
-        <div id="topic-add">
+        <div id="topic-add" class="col-2 offset-5">
             <a href="{% url 'topic-add' %}">
-                tambah
+                <button type="button" class="btn btn-danger">Create Topic</button>
             </a>
         </div>
     {% endif %}
     <br>
 
-    {% for topic in topics %}
-        <h3>Title: <a href="{% url 'topic-detail' topic.id %}">{{ topic.title }}</a> </h3>
-        <p class="row">Description: {{ topic.description }}</p>
-        <hr>
-    {% endfor %}
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        {% for topic in topics %}
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                <h5 class="card-title">{{ topic.title }}</h5>
+                <p class="card-text"><b>Description:</b> {{ topic.description }}</p>
+                <a href="{% url 'topic-detail' topic.id %}" class="btn btn-primary">Go to Topic</a>
+                </div>
+            </div>
+            </div>
+        {% endfor %}
+    </div>
 
 {% endblock content %} 

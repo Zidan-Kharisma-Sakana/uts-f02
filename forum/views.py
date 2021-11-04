@@ -1,6 +1,7 @@
+from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, reverse
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import FormMixin
 from django.views.generic import (
     ListView,
@@ -71,7 +72,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         form.instance.topic = Topic.objects.get(pk=self.kwargs['pk'])
         return super().form_valid(form)
 
-class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class PostUpdateView(LoginRequiredMixin, UpdateView):
     model = Post
     fields = ['title', 'body']
 
@@ -85,12 +86,14 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
             return True
         return False
 
-class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+class PostDeleteView(LoginRequiredMixin, DeleteView):
     model = Post
-    success_url = '/'
 
     def test_func(self):
         post = self.get_object()
         if self.request.user == post.author:
             return True
         return False    
+    
+    def get_success_url(self):
+        return reverse('topic-detail', kwargs={'pk': self.object.topic.id})

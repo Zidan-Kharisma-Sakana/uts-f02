@@ -2,14 +2,25 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-    <form method="POST">
-        {% csrf_token %}
-        <fieldset class="form-group">
-            {{ form|crispy }}
-        </fieldset>
-        <div class="form-group">
-            <button class="btn btn-outline-info" type="submit">Create</button>
+    <div class="row">
+        <div class="col-2 offset-5 mt-1">
+            <h1 style="width: 9ch;">New Post</h1>
         </div>
-    </form>
+    </div>
+
+    <div class="row">
+        <div class="col-7 offset-3 mt-4">
+            <form method="POST">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    {{ form|crispy }}
+                </fieldset>
+                <br>
+                <div class="form-group">
+                    <input class="btn btn-primary" type="submit" value="Post">
+                </div>
+            </form>
+        </div>
+    </div>
 
 {% endblock %}

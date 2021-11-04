@@ -11,7 +11,6 @@ from .views import (
     PostDeleteView
 )
 
-
 urlpatterns = [
     path('', TopicListView.as_view(), name='forum-index'),
     path('topic/add/', TopicCreateView.as_view(), name='topic-add'),

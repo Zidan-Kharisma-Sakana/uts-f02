@@ -2,53 +2,60 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-    <div class="row">
-        <h1 id="header">{{ object.title }}</h1>
+    <div class="col-5 offset-5">
+        <h1 style="width: 10ch;">{{ object.title }}</h1>
     </div>
 
-    <div class="row">
-        
-        {% if object.author == user %}
-            <div class="col-4 offset-0">
+
+    <div class="card">
+        <div class="card-header">
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">{{ object.author }}</h5>
+            <p class="card-text">{{ object.body }}</p>
+            {% if object.author == user %}
                 <a class="btn btn-warning btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}">edit</a>
                 <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' object.id %}">delete</a>
-            </div>
-        {% endif %}
-    </div>
-
-    <div class="row mt-4">
-        <div class="col-3 align-self-center">
-            <h5>{{ object.body }}<h5>
+            {% endif %}
+        </div>
+        <div class="card-footer text-muted">
+            {{ object.timestamp }}
         </div>
     </div>
-
-    <div class="col-4 offset-4 mt-2">
-        <hr class="mt-5">
-    </div>
+    <br>
 
     {% for comment in comments %}
-        <div class="row mt-4 mb-4">
-            <div class="col-3 align-self-center">
-                <h5>{{ comment.body }} (from: {{ comment.author }})<h5>
+        <div class="card w-75">
+            <div class="card-body">
+              <h5 class="card-title">{{ comment.author }}</h5>
+              <p class="card-text">{{ comment.body }}</p>
             </div>
         </div>
     {% endfor %}
 
     <div class="row mt-2">
         <div class="col-7">
-            <form method="POST">
+            <button id="reply-btn" class="btn btn-info" onclick="loadForm()">Reply</button>
+
+            <form id="comment-form" method="POST" style="display: none;">
+                <p>Type here:</p>
                 {% csrf_token %}
                 <fieldset class="form-group">
                     {{ form|crispy }}
                 </fieldset>
                 <div class="form-group">
-                    <button class="btn btn-outline-info" type="submit">Submit</button>
+                    <button class="btn btn-primary" type="submit">comment</button>
                 </div>
             </form>
         </div>
     </div>
     
     <script>
+        function loadForm(){
+            document.getElementById("reply-btn").style.display="none"
+            document.getElementById("comment-form").style.display="block"
+        }
+
         document.getElementById("div_id_author").style.display="none"
         document.getElementById("div_id_post").style.display="none"
         document.getElementById("div_id_body").getElementsByTagName('label')[0].style.display="none"
