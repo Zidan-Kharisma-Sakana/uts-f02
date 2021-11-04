@@ -1,0 +1,46 @@
+<div
+  class="modal fade"
+  id="staticBackdrop"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form action="{% url 'invitation' name=name %}" method="POST">
+      {% csrf_token %}
+        <div class="modal-header">
+          <div class="modal-title" id="staticBackdropLabel">
+            <h5>Send message and invite {{ name }}</h5>
+            <h5>to be your friend!</h5>
+          </div>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div
+          class="modal-body d-flex justify-content-center align-items-center"
+        >
+        <input type="text" name="message" placeholder="Write your message here">
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            go back
+          </button>
+          <button type="submit" data-bs-dismiss="modal" class="btn btn-success">
+            send invitation
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

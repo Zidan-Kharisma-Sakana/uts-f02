@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block custom_css %}
+<link rel="stylesheet" href="{% static 'css/anonymsg/anonymous-page.css' %}" />
+{% endblock custom_css %}
+{% block meta %}
+<title>{{ message_user_profile.name }}'s Anonymous Messages </title>
+{% endblock meta %}
+
+{% block content %}
+<h2>{{ message_user_profile.name }}'s Anonymous Messages</h2>
+{% if messages %}
+{% for message in messages %}
+<div id="test"></div>
+<div class="card">
+    <div class="card-header">
+        {{ message.anonymous_question }}
+    </div>
+    <div class="card-body">
+        <p class="card-text">{{ message.anonymous_answer }}</p>
+    </div>
+</div>
+<br>
+{% endfor %}
+{% endif %}
+{% if not other_view %}
+<button class="open-button" onclick="openForm()">Send a Response!</button>
+<div class="form-popup" id="myForm">
+    <form action="{% url 'edit-message' %}" class="form-container" method="POST">
+        {% csrf_token %}
+        <h5>Select question you want to answer:</h5>
+        <select name="anonymous_question">
+            {% if messages %}
+            {% for message in messages %}
+            <option value="{{ message.anonymous_question }}">{{ message.anonymous_question }}</option>
+            {% endfor %}
+            {% endif %}
+        </select>
+        <h5><label for="anonymous_answer">Type in your response:</label></h5>
+        <textarea name="anonymous_answer" rows="10" cols="40" placeholder="Type your message here..."></textarea>
+        <div>
+            <input type="submit" name="finalize" value="Save" class="btn btn-success">
+            <input type="submit" name="finalize" value="Delete" class="btn btn-danger">
+            <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+        </div>
+    </form>
+</div>
+{% else %}
+<button class="open-button" onclick="openForm()">Ask your Questions!</button>
+<div class="form-popup" id="myForm">
+    <form action="{% url 'ask-page' message_user_profile.name %}" class="form-container" method="POST">
+        {% csrf_token %}
+        <h5><label for="anonymous_question">Type in your question:</label></h5>
+        <textarea name="anonymous_question" rows="10" cols="28" placeholder="Type your message here..."></textarea>
+        <div>
+            <input type="submit" name="finalize" value="Send" class="btn btn-success">
+            <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+        </div>
+    </form>
+</div>
+{% endif %}
+
+{% endblock content %}
+{% block script %}
+<script src="{% static 'js/anonymsg/ask-respond.js' %}"></script>
+{% endblock script %}

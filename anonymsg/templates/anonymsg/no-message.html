@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>{{ message_user_profile.name }}'s Anonymous Message</title>
+{% endblock meta %}
+
+{% block content %}
+<h2>No Messages Exist!</h2>
+{% if other_view %}
+<a href={% url 'ask-page' message_user_profile.name %} class='btn btn-warning' id="questionbutton">Ask a Question!</a>
+{% else %}
+<a href={% url 'main:home' %} class="btn btn-primary">Return to home</a>
+{% endif %}
+{% endblock content %}
