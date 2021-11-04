@@ -1,11 +1,11 @@
 from django import forms
 from django.forms import fields
-from django.forms.widgets import Textarea
+from django.forms.widgets import Input, Textarea
 from .models import NoteModel
 
 
 class NoteForm(forms.ModelForm):
-	timestamp = forms.DateTimeInput()
+	timestamp = forms.DateInput()
 	class Meta:
 		model = NoteModel
 		fields = ('title','timestamp','message')
@@ -18,9 +18,10 @@ class NoteForm(forms.ModelForm):
 					'class':'form-control',
 					'placeholder':'max 13 character',}
 				),
-			'timestamp': forms.TextInput(
+			'timestamp': forms.DateInput(
 				attrs = {
 					'class':'form-control',
+					'type' : 'date'
 					}
 				),
 

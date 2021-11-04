@@ -13,23 +13,37 @@ kelas_note = ["rotate-1 yellow-bg", "rotate-1 lazur-bg", "rotate-1 red-bg", "rot
 
 
 def index(request):
-    notes = NoteModel.objects.all()
-    data = {"list_note" : notes} 
-    print('asas')
-    return render(request, 'note/index.html', context=data)
-
-def add_message(request):
     num = random.randint(0, 7)
     kelas_rand = kelas_note[num]
-    form = NoteForm() 
-    print('asas')
+    notes = NoteModel.objects.all()
+    context = {
+        "notes" : notes,
+       
+        } 
+    return render(request, 'note/index.html', context)
+
+def kelas_rand():
+    num = random.randint(0, 7)
+    kelas_random = kelas_note[num]
+    return kelas_random
+
+def add_message(request):
+    data=dict()
+    if request.method == 'POST':
+        form = NoteForm(request.POST) 
+        if form.is_valid():
+            form.save()
+            data['form_is_valid'] = True
+        else:
+            data['form_is_valid'] = False
+    else:
+        form = NoteForm()
+
     context = {
 		'form': form,
 	}
-    html_form = render_to_string('note/note_form.html',context,request=request)
-    print('asas')
-
-    return JsonResponse({'html_form':html_form})
+    data['html_form'] = render_to_string('note/note_form.html',context,request=request)
+    return JsonResponse(data)
 
 
     
