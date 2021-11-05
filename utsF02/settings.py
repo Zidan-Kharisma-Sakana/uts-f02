@@ -59,7 +59,6 @@ INSTALLED_APPS = [
     'user',
     'note',
     'schedule',
-    'anonymsg'
 ]
 
 MIDDLEWARE = [
