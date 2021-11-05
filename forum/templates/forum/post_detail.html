@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block custom_css %}
+    <link rel="stylesheet" href="{% static 'css/forum_style.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row justify-md-center">
+        <div class="col-4">
+            <a href="{% url 'topic-detail' object.topic.id %}"><span class="badge bg-dark rounded">< back to {{ object.topic }}</span></a>
+        </div>
+        <div class="col-2-center">
+            <div class="col-2 offset-5 mt-1">
+                <h1 class="title">{{ object.title }}</h1>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+        </div>
+        <div class="card-body">
+            <h5 class="card-title badge bg-secondary rounded">{{ object.author }}</h5>
+            <p class="card-text">{{ object.body }}</p>
+            {% if object.author == user %}
+                <a class="btn btn-warning btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}">edit</a>
+                <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' object.id %}">delete</a>
+            {% endif %}
+        </div>
+        <div class="card-footer text-muted">
+            {{ object.timestamp }}
+        </div>
+    </div>
+    <br>
+
+    {% for comment in comments %}
+        <div class="card w-75">
+            <div class="card-body">
+              <h5 class="card-title badge bg-secondary rounded">{{ comment.author }}</h5>
+              <p class="card-text">{{ comment.body }}</p>
+            </div>
+        </div>
+    {% endfor %}
+
+    <div class="row mt-2">
+        <div class="col-7">
+            <button id="reply-btn" class="btn btn-info" onclick="loadForm()">Reply</button>
+
+            <form id="comment-form" method="POST" style="display: none;">
+                <p>Type here:</p>
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    {{ form|crispy }}
+                </fieldset>
+                <div class="form-group">
+                    <div class="container"> <div class="row mt-1">
+                        <div class="col-md-auto"><button id="submit-btn" class="btn btn-info" type="submit">comment</button></div>
+                        <div class="col-md-auto"><button id="hide-btn" class="btn btn-secondary" onclick="loadForm()" style="display: none;">hide</button></div>
+                    </div></div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        function loadForm(){
+            var reply_btn = $("#reply-btn");
+            var comment_form = $("#comment-form");
+            var hide_btn = $("#hide-btn");
+
+            if(reply_btn.is(":visible") == true){
+                reply_btn.hide();
+                comment_form.show();
+                hide_btn.show();
+            } else {
+                reply_btn.show();
+                comment_form.hide();
+                hide_btn.hide();
+            }
+        }
+        $("#div_id_author").hide();
+        $("#div_id_post").hide();
+        $("#div_id_body label").hide();
+    </script>
+{% endblock content %} 

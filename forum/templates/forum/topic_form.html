@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% load static %}
+
+{% block custom_css %}
+    <link rel="stylesheet" href="{% static 'css/forum_style.css' %}">
+{% endblock %}
+
+{% block meta %}
+<script>
+    $(document).ready(function () {
+        $('#id_title').keyup(function () {
+            $.ajax({
+                data: $(this).serialize(),
+                url: "{% url 'validate_topicname' %}",
+                success: function (response) {
+                    if (response.is_taken == true) {
+                        $('#id_title').removeClass('is-valid').addClass('is-invalid');
+                        $('#id_title').after('<div class="invalid-feedback d-block" id="titleError">This title\'s name has been taken!</div>')
+                    }
+                    else {
+                        $('#id_title').removeClass('is-invalid').addClass('is-valid');
+                        $('#titleError').remove();
+
+                    }
+                },
+                error: function (response) {
+                    console.log(response.responseJSON.errors)
+                }
+            });
+
+            return false;
+        });
+    })
+</script>
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row justify-md-center">
+        <div class="col-4">
+            <a href="{% url 'forum-index' %}"><span class="badge bg-dark rounded">< back to Topic List</span></a>
+        </div>
+        <div class="col-2-center">
+            <div class="col-2 offset-5 mt-1">
+                <h1 class="title">New Topic</h1>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-7 offset-3 mt-4">
+            <form method="POST">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    {{ form|crispy }}
+                </fieldset>
+                <br>
+                <div class="form-group">
+                    <input class="btn btn-info" type="submit" value="Submit">
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock content %} 
