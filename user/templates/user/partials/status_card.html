@@ -1,0 +1,36 @@
+<div
+  class="
+    status-card
+    bg-white
+    rounded-2xl
+    py-6
+    md:py-5 md:px-8
+    lg:py-20 lg:px-10
+  "
+>
+  <div class="d-flex flex-row-reverse">
+    <p>{{ datum.time|timesince }} ago</p>
+  </div>
+  <h6 class="status-name">{{ datum.name }}</h6>
+  <p>{{ datum.status }}</p>
+  <div class="d-flex flex-row">
+    <div
+      id="{{ datum.status_id }}"
+      onClick="reply_click(this.id)"
+      class="me-2 like-button"
+    >
+    {% if datum.isLiked %}
+        <i class="bi bi-suit-heart-fill"></i>
+        {% else %}
+        <i class="bi bi-suit-heart"></i>
+    {% endif %}
+    </div>
+    <div>
+      <p id="{{ datum.status_id }}_liker">
+        {% if datum.likes > 0 %} 
+        {{ datum.likes }} people like this  
+         {% endif %}
+      </p>
+    </div>
+  </div>
+</div>

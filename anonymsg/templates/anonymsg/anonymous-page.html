@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block custom_css %}
+<link rel="stylesheet" href="{% static 'css/anonymsg/anonymous-page.css' %}" />
+{% endblock custom_css %}
+{% block meta %}
+<title>{{ message_user_profile.name }}'s Anonymous Messages </title>
+{% endblock meta %}
+
+{% block content %}
+{% if messages %}
+<h2>{{ message_user_profile.name }}'s Anonymous Messages</h2>
+{% for message in messages %}
+<div id="test"></div>
+<div class="card">
+    <div class="card-header">
+        {{ message.anonymous_question }}
+    </div>
+    <div class="card-body">
+        <p class="card-text">{{ message.anonymous_answer }}</p>
+    </div>
+</div>
+<br>
+{% endfor %}
+{% endif %}
+{% if not other_view %}
+{% include 'anonymsg/respond-form.html' %}
+{% else %}
+{% include 'anonymsg/ask-form.html' %}
+{% endif %}
+
+{% endblock content %}
