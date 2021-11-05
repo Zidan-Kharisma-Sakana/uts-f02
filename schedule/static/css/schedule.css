@@ -11197,7 +11197,7 @@ h5,
 
 .button.delete-btn {
     background: #cd4dcc;
-    padding: 0.4rem 1rem;
+    padding: 0.1rem 1rem;
 }
 
 #cancel-button {
@@ -11213,7 +11213,8 @@ h5,
 
 #add-button:hover,
 #ok-button:hover,
-#cancel-button:hover {
+#cancel-button:hover,
+.delete-btn:hover {
     -webkit-transform: scale(1.03);
     -ms-transform: scale(1.03);
     transform: scale(1.03);
@@ -11221,7 +11222,8 @@ h5,
 
 #add-button:active,
 #ok-button:active,
-#cancel-button:active {
+#cancel-button:active,
+.delete-btn:active {
     -webkit-transform: translateY(3px) scale(0.97);
     -ms-transform: translateY(3px) scale(0.97);
     transform: translateY(3px) scale(0.97);

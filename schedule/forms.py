@@ -5,7 +5,6 @@ class ActivityForm(forms.ModelForm):
     class Meta:
         model = Activity
         fields = '__all__'
-        # exclude = ['year', 'month', 'day', 'date']
 
     activity_attrs = {
         'type':'text',
@@ -32,16 +31,6 @@ class ActivityForm(forms.ModelForm):
         'class':'input'
     }
 
-    # lecturer_attrs = {
-    #     'type':'text',
-    #     'class':'input'
-    # }
-
-    # link_attrs = {
-    #     'type':'text',
-    #     'class':'input'
-    # }
-
     activity = forms.CharField(required=True, max_length=30, widget=forms.TextInput(attrs=activity_attrs), error_messages={'required':'Enter Activity Title'})
     year = forms.IntegerField(required=False, widget=forms.NumberInput(attrs=date_atrrs))
     month = forms.IntegerField(required=False, widget=forms.NumberInput(attrs=date_atrrs))
@@ -50,5 +39,3 @@ class ActivityForm(forms.ModelForm):
     end_time = forms.TimeField(required=True, widget=forms.TimeInput(attrs=time_attrs), error_messages={'required':'Enter End Time'})
     type = forms.CharField(required=True, max_length=30, widget=forms.Select(choices=type_choices), error_messages={'required':'Choose Type'})
     desc = forms.CharField(required=False, max_length=300, widget=forms.Textarea(attrs=desc_attrs))
-    # lecturer = forms.CharField(required=False, max_length=30, widget=forms.TextInput(attrs=lecturer_attrs))
-    # link = forms.CharField(required=False, max_length=250, widget=forms.TextInput(attrs=link_attrs))
