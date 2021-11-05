@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block custom_css %}
+<link rel="stylesheet" href="{% static 'css/anonymsg/anonymous-page.css' %}" />
+{% endblock custom_css %}
+{% block meta %}
+<title>{{ message_user_profile.name }}'s Anonymous Message</title>
+{% endblock meta %}
+
+{% block content %}
+<h2>No Messages Exist!</h2>
+{% if other_view %}
+{% include 'anonymsg/ask-form.html' %}
+{% endif %}
+{% endblock content %}

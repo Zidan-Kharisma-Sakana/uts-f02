@@ -1,7 +1,10 @@
+from django import forms
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.forms import ValidationError, EmailField
+
+from user import models
 
 
 class MyAuthenticationForm(AuthenticationForm):

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Ask a Question!</title>
+{% endblock meta %}
+
+{% block content %}
+<h2>Ask a Question!</h2>
+
+<form action="{% url 'ask-page' message_user_profile.name %}" method="POST">
+    {% csrf_token %}
+    <h5><label for="anonymous_question">Type in your question:</label></h5>
+    <textarea name="anonymous_question" rows="10" cols="40" placeholder="Type your message here..."></textarea>
+    <div>
+        <input type="submit" name="finalize" value="Save" class="btn btn-success">
+        <a href={% url 'anonymous-page' %} class="btn btn-primary">Go Back...</a>
+    </div>
+</form>
+{% endblock content %}
