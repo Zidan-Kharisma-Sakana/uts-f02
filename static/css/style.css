@@ -19,7 +19,7 @@ body {
   color: #4d5a6b;
 }
 
-#content{
+#content {
   min-height: 100vh;
   padding: 4rem 8rem;
   width: 90%;
@@ -27,14 +27,14 @@ body {
   margin: 2rem auto;
 }
 
-.logo{
+.logo {
   width: 8rem;
   height: 8rem;
   border-radius: 100px;
-  border: 2px solid rgb(220,220,220);
+  border: 2px solid rgb(220, 220, 220);
 }
 
-nav{
+nav {
   background: #ffce67;
 }
 
@@ -51,7 +51,7 @@ nav{
   color: #4d5a6b;
 }
 
-footer{
+footer {
   background: #acdacf;
 }
 
@@ -65,7 +65,7 @@ a:not([href]):not([tabindex]) {
   #content {
     padding: 2rem 4rem;
   }
-  
+
 }
 
 /* untuk screen dengan ukuran lebar 768 px kebawah */
@@ -73,7 +73,7 @@ a:not([href]):not([tabindex]) {
   #content {
     padding: 1rem 0.5rem;
     width: 100%;
-    margin: 0rem auto; 
+    margin: 0rem auto;
     /* Ini akan mengoverride "  
     margin: 2rem auto;"  yang dideklarasikan 
     sebelumnya khusus untuk layar di bawah 768px */
