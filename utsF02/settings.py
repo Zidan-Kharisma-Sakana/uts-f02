@@ -57,7 +57,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main',
     'user',
-    'anonymsg',
+    'schedule',
+    'anonymsg'
 ]
 
 MIDDLEWARE = [
@@ -174,7 +175,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'pbp.f02@gmail.com'
-EMAIL_HOST_PASSWORD = 'nico-nico-nii!!'
+EMAIL_HOST_USER = 'testdjangof02@gmail.com'
+EMAIL_HOST_PASSWORD = 'kucing132'
 EMAIL_PORT = 587
-DEFAULT_FROM_EMAIL = 'Admin Django <pbp.f02@gmail.com>'
+DEFAULT_FROM_EMAIL = 'Admin Django <testdjangof02@gmail.com>'
