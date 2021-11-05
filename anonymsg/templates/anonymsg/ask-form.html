@@ -1,0 +1,14 @@
+{% load static %}
+<button class="open-button" onclick="openForm()">Ask your Questions!</button>
+<div class="form-popup" id="myForm">
+    <form action="{% url 'ask-page' message_user_profile.name %}" class="form-container" method="POST">
+        {% csrf_token %}
+        <h5><label for="anonymous_question">Type in your question:</label></h5>
+        <textarea name="anonymous_question" rows="10" cols="28" placeholder="Type your message here..."></textarea>
+        <div>
+            <input type="submit" name="finalize" value="Send" class="btn btn-success">
+            <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+        </div>
+    </form>
+</div>
+<script src="{% static 'js/anonymsg/ask-respond.js' %}"></script>
