@@ -60,7 +60,6 @@ INSTALLED_APPS = [
     'forum',
     'crispy_forms',
     'todolist',
-    'user',
     'note',
     'schedule',
     'anonymsg'
