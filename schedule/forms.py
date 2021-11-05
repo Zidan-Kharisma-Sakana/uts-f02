@@ -4,7 +4,7 @@ from .models import Activity
 class ActivityForm(forms.ModelForm):
     class Meta:
         model = Activity
-        fields = '__all__'
+        exclude = ['user']
 
     activity_attrs = {
         'type':'text',
