@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+    <title>News</title>
+{% endblock meta %}
+
+{% block content %}
+    <button type="button">
+        <a href="{% url 'newsrequest' %}">Add News</a>
+    </button>
+    <center>
+        <h1>Latest News</h1>
+
+        {% for news in queryset %}
+        <div>{{ news.headline }}</div>
+        <div>{{ news.body }}</div>
+        {% endfor %}
+    </center>
+
+
+{% endblock content %}

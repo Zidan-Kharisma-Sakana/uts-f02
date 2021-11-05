@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main',
     'user',
+    'news',
     'forum',
     'crispy_forms',
     'todolist',
