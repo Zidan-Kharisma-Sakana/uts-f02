@@ -17,11 +17,9 @@ $(document).ready(function(){
     $(".left-button").click({date: date}, prev_year);
     $(".month").click({date: date}, month_click);
     $("#add-button").click({date: date}, new_event);
-    // $(".delete-btn").click(delete_activity);
     // Set current month as active
     $(".months-row").children().eq(date.getMonth()).addClass("active-month");
     init_calendar(date);
-    // console.log("load actvity_data AFTER ajax 1: " + JSON.stringify(activity_data["activities"]));
     var activities = check_activities(today, date.getMonth()+1, date.getFullYear());
     show_activities(activities, months[date.getMonth()], today);
 });
@@ -168,6 +166,10 @@ function new_event(event) {
         else if (!validate_time(end_time)) {
             $("#id_end_time").addClass("error-input");
         }
+        else if (!validate_end_time(start_time, end_time)) {
+            alert("End Time of an activity should be later than Start Time.");
+            $("#form").trigger('reset');
+        }
         else {
             $("#dialog").hide(250);
             console.log("new event");
@@ -203,12 +205,6 @@ function new_event(event) {
                             date.setDate(day);
                             init_calendar(date);
                         },
-                        // complete: function (response) {
-                        //     // load_activities(dataJSON);  uncomment
-                        //     date.setDate(day);
-                        //     init_calendar(date);
-                        //     // console.log("load actvity_data AFTER ajax 4: " + JSON.stringify(activity_data));
-                        // }
                     })
             })
         }
@@ -244,18 +240,11 @@ function delete_activity(event) {
                             console.log("deleted from activity_data")
                         }
                     }
-                    // alert("Activity has been successfully deleted!");
-                    // var date = event.data.date;
-                    // var day = parseInt($(".active-date").html());
-                    // date.setDate(day);
-                    // init_calendar(date);
                     console.log(day + " " + month + " " + year)
                     date.setDate(day);
                     date.setMonth(month-1);
                     date.setFullYear(year);
                     init_calendar(date);
-                    // var activities = check_activities(day, month, year)
-                    // show_activities(activities, month, day);
                 }
             }
         });
@@ -278,11 +267,6 @@ function load_activities(data) {
 function show_activities(activities, month, day) {
     console.log("show_activities");
     console.log(activities);
-    // activity_data = {
-    //     "activities": []
-    // };
-    // load_activities(dataJSON); uncomment
-    // console.log("load actvity_data AFTER ajax 3: " + JSON.stringify(activity_data));
 
     // Clear the dates container
     $(".events-container").empty();
@@ -302,7 +286,6 @@ function show_activities(activities, month, day) {
 
         // Go through and add each event as a card to the events container
         for(var i=0; i<activities.length; i++) {
-            var as_button = $("<a class='clickable-card' data-bs-toggle='collapse' href='.multi-collapse' role='button' aria-expanded='false' aria-controls='"+activities[i]["id"]+"1 "+activities[i]["id"]+"2'/>")
             var activity_card = $("<div class='event-card'></div>");
             var row_container = $("<div class='row'></div>")
             var col_container = $("<div class='col'></div>")
@@ -310,21 +293,16 @@ function show_activities(activities, month, day) {
             var activity_title = $("<div class='event-name row'><strong>"+activities[i]["activity"]+"</strong> </div>");
             var activity_type = $("<div class='event-type col d-flex align-items-center justify-content-end'>"+activities[i]["type"]+"</div>");
             var activity_detail = $("<div class='event-desc row' id='"+activities[i]["id"]+"1'><strong class='title-text'>Description</strong><br><span>"+activities[i]["desc"]+"</span></div>")
-            // var trash_icon = $("<input type='submit' value='f2ed Delete' data-sid='"+activities[i]["id"]+"' class='delete-btn fa fa-input' style='padding-top:22px; padding-left: 5px; font-size:22px;'/>");
             var trash_icon = $("<input type='submit' value='Delete' data-sid='"+activities[i]["id"]+"' class='button delete-btn'/>");
-            // var edit_icon = $("<div class='edit-btn fa fa-edit' style='padding-top:22px; padding-right: 5px; font-size:22px;'></div")
-            var edit_icon = $("")
             var icons = $("<div class='collapse d-flex justify-content-end' id='"+activities[i]["id"]+"2'></div>");
 
             trash_icon.click(delete_activity);
-            // trash_icon.bind()
 
             $(col_container).append(activity_time).append(activity_title)
             $(row_container).append(col_container).append(activity_type);
-            $(icons).append(edit_icon).append(trash_icon);
+            $(icons).append(trash_icon);
             $(activity_card).append(row_container).append(activity_detail).append(icons);
-            $(as_button).append(activity_card);
-            $(".events-container").append(as_button);
+            $(".events-container").append(activity_card);
         }
     }
 }
@@ -332,10 +310,8 @@ function show_activities(activities, month, day) {
 // Checks if a specific date has any events
 function check_activities(day, month, year) {
     var activities = [];
-    // console.log(day + " " + month + " " + year + JSON.stringify(activity_data["activities"][0]))
     for(var i=0; i<activity_data["activities"].length; i++) {
         var activity = activity_data["activities"][i];
-        // console.log(day + " " + month + " " + year + " " + JSON.stringify(activity_data["activities"][i]))
         if(activity["day"]===day &&
             activity["month"]===month &&
             activity["year"]===year) {
@@ -343,7 +319,6 @@ function check_activities(day, month, year) {
                 console.log("WEHH MASUK");
             }
     }
-    // console.log("check_activities: " + JSON.stringify(activities));
     return activities;
 }
 
@@ -355,6 +330,15 @@ function validate_time(time) {
     var military = /^\s*([01]?\d|2[0-3]):[0-5]\d\s*$/i;
     var standard = /^\s*(0?\d|1[0-2]):[0-5]\d(\s+(AM|PM))?\s*$/i;
     return time.match(military) || time.match(standard);
+}
+
+function validate_end_time(start_time, end_time) {
+    var start_time = start_time.toString();
+    var end_time = end_time.toString();
+    if (start_time.localeCompare(end_time) > 0) {
+        return false;
+    }
+    return true;
 }
 
 const months = [ 
