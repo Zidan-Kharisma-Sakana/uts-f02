@@ -13,7 +13,7 @@ from django.views.generic import (
 )
 
 from .models import Topic, Post, Comment
-from .forms import CreateCommentForm
+from .forms import CreateCommentForm, CreateTopicForm
 
 # Topic views
 
@@ -33,7 +33,7 @@ class TopicDetailView(DetailView):
 
 class TopicCreateView(LoginRequiredMixin, CreateView):
     model = Topic
-    template_name = 'forum/post_form.html'
+    template_name = 'forum/topic_form.html'
     fields = ['title', 'description']
 
     def form_valid(self, form):

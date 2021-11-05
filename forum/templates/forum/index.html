@@ -1,8 +1,14 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block custom_css %}
+    <link rel="stylesheet" href="{% static 'css/forum_style.css' %}" />
+{% endblock %}
+
 {% block content %}
 
     <div class="col-2 offset-5 mt-1">
-        <h1 style="width: 10ch;">Topic List</h1>
+        <h1 class="title">Topic List</h1>
     </div>
 
     {% if user.is_superuser %}
@@ -21,7 +27,7 @@
                 <div class="card-body">
                 <h5 class="card-title">{{ topic.title }}</h5>
                 <p class="card-text"><b>Description:</b> {{ topic.description }}</p>
-                <a href="{% url 'topic-detail' topic.id %}" class="btn btn-primary">Go to Topic</a>
+                <a href="{% url 'topic-detail' topic.id %}" class="btn" id="btn-topic">Go to Topic</a>
                 </div>
             </div>
         </div>
