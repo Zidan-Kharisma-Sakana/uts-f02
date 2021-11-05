@@ -56,8 +56,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
-    'todolist',
     'user',
+    'forum',
+    'crispy_forms',
+    'todolist',
     'note',
     'schedule',
     'anonymsg'
@@ -152,6 +154,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# Crispy forms
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 # This is the directory for storing `collectstatic` results.
 # This shouldn't be included in your Git repository.
 STATIC_ROOT = BASE_DIR / 'staticfiles'
@@ -180,6 +186,5 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'testdjangof02@gmail.com'
 EMAIL_HOST_PASSWORD = 'kucing132'
 EMAIL_PORT = 587
-DEFAULT_FROM_EMAIL = 'Admin Django <pbp.f02@gmail.com>'
 LOGIN_URL = '/user/login/'
 DEFAULT_FROM_EMAIL = 'Admin Django <testdjangof02@gmail.com>'

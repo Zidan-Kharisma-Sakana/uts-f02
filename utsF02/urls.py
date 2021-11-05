@@ -22,6 +22,7 @@ urlpatterns = [
     path('user/', include('user.urls')),
     path('anonymsg/', include('anonymsg.urls')),
     path('', include('main.urls')),
+    path('forum/', include('forum.urls')),
     path('note/',include(note_urls)),
     path('todolist/', include('todolist.urls')),
     path('schedule/', include('schedule.urls'))
