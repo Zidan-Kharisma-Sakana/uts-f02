@@ -6,7 +6,7 @@ from datetime import datetime
 
 class ToDoList(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=100, default="")
     checklist = models.BooleanField(default=False)
     description = models.TextField(null=True, blank=True)
     deadline = models.DateTimeField(default=datetime.now, blank=False)

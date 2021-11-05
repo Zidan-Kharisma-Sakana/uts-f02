@@ -54,7 +54,7 @@ class TodoDetail(LoginRequiredMixin, DetailView):
 
 class TodoCreate(LoginRequiredMixin, CreateView):
     model = ToDoList
-    # form_class = ToDoListForm
+    form = ToDoListForm
     fields = ['title', 'description', 'checklist', 'deadline']
     success_url = reverse_lazy('todolist')
     template_name = 'todolist/todolist_form.html'

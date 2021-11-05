@@ -9,7 +9,7 @@
         color: #fff;
         padding: 10px;
         border-radius: 5px 5px 0 0;
-        background: #89B5AF
+        background: #ffce67
     }
     .header-bar a {
         color: rgb(247, 247, 247);
@@ -23,7 +23,7 @@
     }
     input {
         outline: none;
-        border: #89B5AF;
+        border: #ffce67;
         padding: 10px;
         border-radius: 5px;
     }
@@ -35,7 +35,7 @@
     }
     
     #add-link {
-        color: #89B5AF;
+        color: #ffce67;
         text-decoration: none;
         font-size: 42px;
         text-shadow: 1px 1px #81413b;
@@ -52,7 +52,7 @@
     .todo-complete-icon {
         height: 20px;
         width: 20px;
-        background-color: #96C7C1;
+        background-color: #ffce67;
         border-radius: 50%;
     }
     .todo-incomplete-icon {
@@ -64,7 +64,7 @@
     .delete-link {
         text-decoration: none;
         font-weight: 900;
-        color: #89B5AF;
+        color: #ffce67;
         font-size: 22px;
         line-height: 0;
         padding: 20px 0px;
@@ -87,7 +87,7 @@
         cursor: grabbing;
     }
     h1, h3 {
-        font-family: 'Raleway', sans-serif;
+        font-family: "Lato", Arial, sans-serif;
     }
     .todo-title {
         display: flex;
@@ -178,7 +178,7 @@
         {% empty %}
         <div style="text-align: center; padding-bottom: 10px; line-height: 1em;">
             <h3>No tasks are created.</h3>
-            <h3>Create a <a style="text-decoration: none; color: #89B5AF;" href="{% url 'todo-create' %}">New task</a> ! </h3>
+            <h3>Create a <a style="text-decoration: none; color: #ffce67;" href="{% url 'todo-create' %}">New task</a> ! </h3>
         </div>
         {% endfor %}
     </div>

@@ -28,6 +28,3 @@ class ToDoListForm(forms.Form):
     Description = forms.CharField(required=False, max_length=300, widget=forms.Textarea(attrs=description_attrs))
     Checklist = forms.BooleanField(widget=forms.CheckboxInput(attrs=check_attrs))
     Deadline = forms.DateTimeField(required=True, widget=forms.DateInput(attrs=deadline_attrs))
-
-    def __init__(self):
-        super(ToDoListForm, self).__init__()
