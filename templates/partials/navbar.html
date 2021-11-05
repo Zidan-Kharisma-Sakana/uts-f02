@@ -17,19 +17,13 @@
             aria-expanded="false">
             Daftar Modul
           </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-<<<<<<< HEAD
-            <li><a class="dropdown-item" href="#">Modul 1</a></li>
-            <li><a class="dropdown-item" href="{% url 'main:anonymous_page' %}">Anonymous Message</a></li>
-            <li><a class="dropdown-item" href="{% url 'main:forum_index' %}">Forum Discussion</a></li>
-=======
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">         
             <li><a class="dropdown-item" href="{% url 'user' %}">User</a></li>
             <li><a class="dropdown-item" href="{% url 'todolist' %}">To Do List </a></li>
             <li><a class="dropdown-item" href="{% url 'schedule' %}">Schedule</a></li>
             <li><a class="dropdown-item" href="{% url 'anonymsg' %}">Anonymous Messages</a></li>
-            <li><a class="dropdown-item" href="#">Forum</a></li>
-            <li><a class="dropdown-item" href="#">Note</a></li>
->>>>>>> 3afbe81edf5f21e43043c2b0d494abeb18e92cdd
+            <li><a class="dropdown-item" href="{% url 'main:forum_index' %}">Forum Discussion</a></li>
+            <li><a class="dropdown-item" href="{% url 'note:index' %}">Note</a></li>
           </ul>
         </li>
         <li class="nav-item">
