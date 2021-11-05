@@ -59,6 +59,12 @@ INSTALLED_APPS = [
     'main',
     'user',
     'realchat',
+    'forum',
+    'crispy_forms',
+    'todolist',
+    'note',
+    'schedule',
+    'anonymsg'
 ]
 
 MIDDLEWARE = [
@@ -160,6 +166,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# Crispy forms
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 # This is the directory for storing `collectstatic` results.
 # This shouldn't be included in your Git repository.
 STATIC_ROOT = BASE_DIR / 'staticfiles'
@@ -185,9 +195,8 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'pbp.f02@gmail.com'
-EMAIL_HOST_PASSWORD = 'nico-nico-nii!!'
+EMAIL_HOST_USER = 'testdjangof02@gmail.com'
+EMAIL_HOST_PASSWORD = 'kucing132'
 EMAIL_PORT = 587
-DEFAULT_FROM_EMAIL = 'Admin Django <pbp.f02@gmail.com>'
-
-LOGIN_URL='/user/login/'
+LOGIN_URL = '/user/login/'
+DEFAULT_FROM_EMAIL = 'Admin Django <testdjangof02@gmail.com>'

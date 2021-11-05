@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block custom_css %}
+<link rel="stylesheet" href="{% static 'todolist.css' %}">
+{% endblock custom_css %}
+
+{% block content %}
+
+<div class="container-todolist">
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <div class="header-bar">
+        <div>
+            <h1>Hello {{ request.user|title }}</h1>
+            <h3 style="margin:0">You have <i>{{ count }}</i> incomplete task{{ count|pluralize:"s" }}</h3>
+        </div>
+
+        {% if request.user.is_authenticated %}
+        <a href="{% url 'logout' %}">Logout</a> {% else %}
+        <a href="{% url 'login' %}">Login</a> {% endif %}
+    </div>
+
+    <div id="search-add-wrapper">
+        <form method="GET" style="display: flex;">
+            <input type='text' name='search-area' placeholder="Search your task" value="{{search_input}}">
+            <input class="button-search" type="submit" value='Search'>
+        </form>
+        {% if todolist|length > 0 %}
+        <a id="add-link" href="{% url 'todo-create' %}">&#x2b;</a>
+        {% endif %}
+    </div>
+
+    <!-- Hidden form. Form submits new item positions -->
+    <form style="display: none;" id="reorderForm" method="post" action="{% url 'todo-reorder' %}">
+        {% csrf_token %}
+        <input type="hidden" id="positionInput" name="todolist">
+    </form>
+
+    <div id="tasklist" class="todo-items-wrapper">
+        {% for todo in todolist %}
+        <div class="todo-wrapper" data-position="{{todo.pk}}">
+            <div class="todo-title">
+                {% if todo.checklist %}
+                <div class="todo-complete-icon"></div>
+                <i><s><a href="{% url 'todo-update' todo.id %}">{{todo}}</a></s></i> {% else %}
+                <div class="todo-incomplete-icon"></div>
+                <a href="{% url 'todo-update' todo.id %}">{{todo}}</a> {% endif %}
+            </div>
+            <div class="todo-controls">
+                <a class="delete-link" href="{% url 'todo-delete' todo.id %}">&#215;</a>
+                <span class="handle">&nbsp;&#10247;</span>
+            </div>
+        </div>
+
+        {% empty %}
+        <div style="text-align: center; padding-bottom: 10px; line-height: 1em;">
+            <h3>No tasks are created.</h3>
+            <h3>Create a <a style="text-decoration: none; color: #ffce67;" href="{% url 'todo-create' %}">New task</a> ! </h3>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        var taskList = document.getElementById("tasklist");
+        var reorderForm = document.getElementById("reorderForm");
+        var positionInput = document.getElementById("positionInput");
+
+        let sortable = Sortable.create(taskList, {
+            handle: '.handle',
+            ghostClass: 'dropArea',
+            chosenClass: 'selectedTask',
+        });
+        $.ajax({
+            url: 'todolist',
+            type: 'GET',
+            dataType: 'json',
+        }).done
+        function reordering() {
+            const rows = document.getElementsByClassName("task-wrapper");
+            let pos = [];
+            for (let row of rows) {
+                pos.push(row.dataset.position);
+            }
+            console.log(pos.join(","))
+            positionInput.value = pos.join(',');
+            reorderForm.submit();
+        }
+
+        document.ondrop = reordering
+    </script>
+</div>
+
+
+
+{% endblock content %}

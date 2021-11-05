@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+{% block custom_css %}
+<link rel="stylesheet" href="{% static 'todolist.css' %}">
+{% endblock custom_css %}
+
+{% block content %}
+
+<div class="confirm-delete">
+    <div class="header-bar">
+        <a href="{% url 'todolist' %}">&#8592; Go Back</a>
+    </div>
+    
+    <div class="card-delete">
+        <form method="POST">
+            {% csrf_token %}
+            <p>Are your sure you want to delete this task? </p>
+            <input class="button-delete" type="submit" value="Delete" />
+        </form>
+    </div>
+</div>
+
+{% endblock content %}
+

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block custom_css %}
+    <link rel="stylesheet" href="{% static 'css/forum_style.css' %}" />
+{% endblock %}
+
+{% block content %}
+
+    <div class="col-2 offset-5 mt-1">
+        <h1 class="title">Topic List</h1>
+    </div>
+
+    {% if user.is_superuser %}
+        <div id="topic-add" class="col-2 offset-5">
+            <a href="{% url 'topic-add' %}">
+                <button type="button" class="btn btn-danger">Create Topic</button>
+            </a>
+        </div>
+    {% endif %}
+    <br>
+
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        {% for topic in topics %}
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                <h5 class="card-title">{{ topic.title }}</h5>
+                <p class="card-text"><b>Description:</b> {{ topic.description }}</p>
+                <a href="{% url 'topic-detail' topic.id %}" class="btn" id="btn-topic">Go to Topic</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+{% endblock content %} 
