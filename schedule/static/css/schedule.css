@@ -10990,7 +10990,7 @@ h5,
     height: 500px;
     position: relative;
     margin: 20px auto;
-    background: #7e0cf5;
+    background: #acdacf;
 }
 
 
@@ -11043,7 +11043,7 @@ h5,
 }
 
 .event-time {
-    color: #7e0cf5;
+    color: #f27a86;
     text-align: right;
     padding-left: 12px;
     font-size: 14px;
@@ -11056,7 +11056,7 @@ h5,
 }
 
 .event-type {
-    color: #cd4dcc;
+    color: #efc266;
     text-align: right;
     font-size: 14px;
     text-transform: uppercase;
@@ -11179,9 +11179,9 @@ h5,
     -webkit-transition: .2s ease all;
     -o-transition: .2s ease all;
     transition: .2s ease all;
-    color: white;
+    color: #4d5a6b;
     border: none;
-    background: #7e0cf5;
+    background: #ffce67;
 }
 
 .button.button-white {
@@ -11196,12 +11196,14 @@ h5,
 }
 
 .button.delete-btn {
-    background: #cd4dcc;
+    background: #f27a86;
+    color: white;
     padding: 0.1rem 1rem;
 }
 
 #cancel-button {
-    background: #cd4dcc;
+    background: #f27a86;
+    color: white;
 }
 
 #add-button {
@@ -11283,7 +11285,7 @@ h5,
 }
 
 .month:hover {
-    color: #cd4dcc;
+    color: #f27a86;
 }
 
 
@@ -11307,12 +11309,12 @@ h5,
 }
 
 .table-date:not(.nil):hover {
-    border-color: #cd4dcc;
+    border-color: #ea7c89;
 }
 
 .event-date {
-    border-color: #7e0cf5;
-    background: #7e0cf5;
+    border-color: #85bacd;
+    background: #85bacd;
     color: #fff;
 }
 
@@ -11328,12 +11330,12 @@ h5,
 }
 
 .active-date {
-    background: #cd4dcc;
+    background: #f27a86;
     color: #fff;
 }
 
 .event-date.active-date {
-    background: #7e0cf5;
+    background: #85bacd;
 }
 
 
@@ -11418,7 +11420,7 @@ input[type="time"]:focus,
 select:focus {
     outline: none;
     background: #ffecff;
-    border-bottom: 4px solid #cd4dcc;
+    border-bottom: 4px solid #f27a86;
 }
 
 select {
