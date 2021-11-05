@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'main',
     'todolist',
     'user',
+    'note',
     'schedule',
     'anonymsg'
 ]
