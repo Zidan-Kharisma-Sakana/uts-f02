@@ -55,19 +55,22 @@
     
     <script>
         function loadForm(){
-            if (document.getElementById("reply-btn").style.display != "none"){
-                document.getElementById("reply-btn").style.display="none";
-                document.getElementById("comment-form").style.display="block";
-                document.getElementById("hide-btn").style.display="block";
+            var reply_btn = $("#reply-btn");
+            var comment_form = $("#comment-form");
+            var hide_btn = $("#hide-btn");
+
+            if(reply_btn.is(":visible") == true){
+                reply_btn.hide();
+                comment_form.show();
+                hide_btn.show();
             } else {
-                document.getElementById("reply-btn").style.display="block";
-                document.getElementById("comment-form").style.display="none";
-                document.getElementById("hide-btn").style.display="none";
+                reply_btn.show();
+                comment_form.hide();
+                hide_btn.hide();
             }
         }
-
-        document.getElementById("div_id_author").style.display="none"
-        document.getElementById("div_id_post").style.display="none"
-        document.getElementById("div_id_body").getElementsByTagName('label')[0].style.display="none"
+        $("#div_id_author").hide();
+        $("#div_id_post").hide();
+        $("#div_id_body label").hide();
     </script>
 {% endblock content %} 
