@@ -22,4 +22,5 @@ urlpatterns = [
     path('user/', include('user.urls')),
     path('', include('main.urls')),
     path('note/',include(note_urls)),
+    path('schedule/', include('schedule.urls'))
 ]
