@@ -1,10 +1,9 @@
 from django import forms
-# from .models import ToDoList
 
 class ToDoListForm(forms.Form):
-    position = forms.CharField()
-    # class Meta:
-    #     model = ToDoList
-    #     fields = (
-    #         "user", "text",
-    #     )
+    class Meta:
+        todolist = forms.CharField()
+    title_attrs = {
+        'type' : 'text',
+        'placeholder' : 'What do you want to do ?'
+    }

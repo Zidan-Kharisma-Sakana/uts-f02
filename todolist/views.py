@@ -12,17 +12,26 @@ from django.db import transaction
 
 from .models import ToDoList
 from .forms import ToDoListForm
+from django.utils import timezone
 
 # Create your views here.
 
 def home(request):
     if request.user.is_superuser:
         return HttpResponseRedirect("/admin/")
-    return HttpResponseRedirect(reverse_lazy("todolist"))
+    return HttpResponseRedirect(reverse_lazy("/todolist/"))
 
 class TaskList(LoginRequiredMixin, ListView):
     model = ToDoList
     context_object_name = 'todolist'
+    ordering = ['deadline']
+    template_name = 'todolist/todo_list.html'
+
+    def query_by_date():
+        qset = ToDoList.objects.all()
+        result = list(qset.filter(deadline=timezone.now)) + list(qset.filter(deadline=timezone.now)) + list(qset.filter(deadline=timezone.now))
+        return result
+    # Referensi : https://stackoverflow.com/questions/39550997/django-queryset-order-by-dates-near-today/39551190
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -31,7 +40,7 @@ class TaskList(LoginRequiredMixin, ListView):
 
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
-            context['todolist'] = context['todolist'].filter(text__contains=search_input)
+            context['todolist'] = context['todolist'].filter(title__contains=search_input)
 
         context['search_input'] = search_input
 
@@ -40,12 +49,12 @@ class TaskList(LoginRequiredMixin, ListView):
 class TodoDetail(LoginRequiredMixin, DetailView):
     model = ToDoList
     context_object_name = 'todo'
-    template_name = 'todolist/todo.html'
+    template_name = 'todolist/todolist_form.html'
 
 class TodoCreate(LoginRequiredMixin, CreateView):
     model = ToDoList
-    fields = ['text', 'description', 'checklist']
-    success_url = reverse_lazy('todo_list')
+    fields = ['title', 'description', 'checklist', 'deadline']
+    success_url = reverse_lazy('todolist')
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -53,13 +62,13 @@ class TodoCreate(LoginRequiredMixin, CreateView):
 
 class TodoUpdate(LoginRequiredMixin, UpdateView):
     model = ToDoList
-    fields = ['text', 'description', 'checklist']
-    success_url = reverse_lazy('todo_list')
+    fields = ['title', 'description', 'checklist', 'deadline']
+    success_url = reverse_lazy('todolist')
 
 class TodoDelete(LoginRequiredMixin, DeleteView):
     model = ToDoList
-    context_object_name = 'todo_list'
-    success_url = reverse_lazy('todo_list')
+    context_object_name = 'todolist'
+    success_url = reverse_lazy('todolist')
 
     def get_queryset(self):
         owner = self.request.user
@@ -70,13 +79,14 @@ class TodoReorder(View):
         form = ToDoListForm(request.POST)
 
         if form.is_valid():
-            positionList = form.cleaned_data["position"].split(',')
+            positionList = form.cleaned_data["todolist"].split(',')
 
             with transaction.atomic():
                 self.request.user.set_task_order(positionList)
 
-        return redirect(reverse_lazy('todo_list'))
+        return redirect(reverse_lazy('todolist'))
 
 # Referensi :
 # https://www.youtube.com/watch?v=llbtoQTt4qw
 # https://www.youtube.com/watch?v=phHM6glUURw
+# https://www.dennisivy.com/post/django-class-based-views/
