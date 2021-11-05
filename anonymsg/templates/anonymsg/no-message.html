@@ -12,7 +12,5 @@
 <h2>No Messages Exist!</h2>
 {% if other_view %}
 {% include 'anonymsg/ask-form.html' %}
-{% else %}
-<a href={% url 'main:home' %} class="btn btn-primary">Return to home</a>
 {% endif %}
 {% endblock content %}
