@@ -7,7 +7,8 @@
 
 {% block content %}
 <div class="d-flex flex-row-reverse">
-<a href={% url 'status' %}><button class="btn btn-primary">Back to profile</button></a>
+<a class="mx-2" href={% url 'search-friend' %}><button class="btn btn-secondary">Search Friend</button></a>
+<a class="mx-2" href={% url 'status' %}><button class="btn btn-primary">Back to profile</button></a>
 </div>
 <section>
 <h2>Pending Invitation</h2>

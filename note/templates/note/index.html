@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block custom_css %}
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'note/style.css' %}">
+{% endblock custom_css %}
+
+
+{% block meta %}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{% endblock meta %}
+
+{% block content %}    
+    <div class="container " id="modal-table">
+        {% include "note/index2.html" %}
+    </div>
+    
+    <button class="btn btn-primary show-form" data-url="{% url 'note:add_message' %}" >
+        <span class="glyphicon glyphicon-plus"></span>
+        New Note
+    </button>
+
+    <div class="modal fade" id="modal-note">
+        <div class="modal-dialog">
+          <div class="modal-content"></div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/script.js' %}"></script>
+
+
+{% endblock content %}

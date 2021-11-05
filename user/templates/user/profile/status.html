@@ -56,11 +56,8 @@
 {% endblock content %}
 {% block script %}
 <script type="text/javascript">
-let flag = false
   function reply_click(status_id)
   {
-    if(flag) return;
-    flag = true
     let data = new FormData();
     data.append('status_id', status_id);
     let midd = $('input[name=csrfmiddlewaretoken]').val();
@@ -95,7 +92,6 @@ let flag = false
     }).catch((error) => {
         alert("Ada error, cek console!")
         console.error('Error:', error);}).finally(()=>{
-            flag = false;
         })
   }
 </script>

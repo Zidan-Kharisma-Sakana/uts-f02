@@ -2,11 +2,11 @@
 {% load static %}
 
 {% block meta %}
-<title>Ask a Question</title>
+<title>Ask a Question!</title>
 {% endblock meta %}
 
 {% block content %}
-<h1>Ask a Question</h1>
+<h2>Ask a Question!</h2>
 
 <form action="{% url 'ask-page' message_user_profile.name %}" method="POST">
     {% csrf_token %}

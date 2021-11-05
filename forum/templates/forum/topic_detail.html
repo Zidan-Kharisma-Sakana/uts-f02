@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block custom_css %}
+    <link rel="stylesheet" href="{% static 'css/forum_style.css' %}">
+{% endblock %}
+{% block content %}
+
+    <div class="container">
+        <div class="row justify-md-center">
+        <div class="col-4">
+            <a href="{% url 'forum-index' %}"><span class="badge bg-dark rounded">< back to Topic List</span></a>
+        </div>
+        <div class="col-2-center">
+            <div class="col-2 offset-5 mt-1">
+                <h1 class="title">{{ object.title }}</h1>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    {% if request.user.is_authenticated %}
+        <div id="topic-add" class="col-2 offset-5">
+            <a href="{%url 'post-create' object.id%}">
+                <button type="button" class="btn btn-danger">New Post</button>
+            </a>
+        </div>
+    {% endif %}
+    <br><br>
+    
+    <div class="container">
+    {% for post in posts %}
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-3">
+                <div class="fw">
+                    <p class="badge bg-secondary rounded">{{ post.author }}</p>
+                </div>
+                {{ post.title }}
+            </div>
+            <a href="{% url 'post-detail' post.id%}"><span class="badge bg-primary rounded-pill">open</span></a>
+        </li>
+    {% endfor %}
+    </div>
+
+{% endblock %}
