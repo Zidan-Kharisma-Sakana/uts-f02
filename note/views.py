@@ -30,6 +30,8 @@ def index(request):
 @login_required(login_url="/user/login/")
 def add_message(request):
     data=dict()
+    user_id = request.user.id
+    user = User.objects.get(id=user_id)
     if request.method == 'POST':
         form = NoteForm(request.POST) 
         if form.is_valid():
@@ -37,7 +39,7 @@ def add_message(request):
             instance.user = request.user
             instance.save()
             data['form_is_valid'] = True
-            notes = NoteModel.objects.all()
+            notes = NoteModel.objects.filter(user = user)
             data['note_list'] = render_to_string('note/index2.html',{'notes' :notes})
         else:
             data['form_is_valid'] = False
@@ -53,11 +55,13 @@ def add_message(request):
 @login_required(login_url="/user/login/")
 def delete_message (request,id):
     data = dict()
+    user_id = request.user.id
+    user = User.objects.get(id=user_id)
     note = get_object_or_404(NoteModel,id=id)
     if request.method == "POST":
         note.delete()
         data['form_is_valid'] = True
-        notes = NoteModel.objects.all()
+        notes = NoteModel.objects.filter(user = user)
         data['note_list'] = render_to_string('note/index2.html',{'notes':notes})
     else:
         context ={'note':note}
