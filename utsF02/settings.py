@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
+    'todolist',
     'user',
     'schedule',
     'anonymsg'
@@ -178,4 +179,6 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'testdjangof02@gmail.com'
 EMAIL_HOST_PASSWORD = 'kucing132'
 EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = 'Admin Django <pbp.f02@gmail.com>'
+LOGIN_URL = '/user/login/'
 DEFAULT_FROM_EMAIL = 'Admin Django <testdjangof02@gmail.com>'
