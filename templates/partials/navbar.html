@@ -1,6 +1,6 @@
 <nav class="border-bottom navbar navbar-expand-lg">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" id="nav-title" ref="#">Be Productive!</a>
     {% comment %} navbar toggler buat mobile, jangan diilangin {% endcomment %}
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,9 +18,18 @@
             Daftar Modul
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+<<<<<<< HEAD
             <li><a class="dropdown-item" href="#">Modul 1</a></li>
             <li><a class="dropdown-item" href="{% url 'main:anonymous_page' %}">Anonymous Message</a></li>
             <li><a class="dropdown-item" href="{% url 'main:forum_index' %}">Forum Discussion</a></li>
+=======
+            <li><a class="dropdown-item" href="{% url 'user' %}">User</a></li>
+            <li><a class="dropdown-item" href="{% url 'anonymsg' %}">Anonymous Messages</a></li>
+            <li><a class="dropdown-item" href="#">Forum</a></li>
+            <li><a class="dropdown-item" href="{% url 'schedule' %}">Schedule</a></li>
+            <li><a class="dropdown-item" href="{% url 'todolist' %}">To Do List</a></li>
+            <li><a class="dropdown-item" href="#">Note</a></li>
+>>>>>>> 3afbe81edf5f21e43043c2b0d494abeb18e92cdd
           </ul>
         </li>
         <li class="nav-item">

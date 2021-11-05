@@ -15,10 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from note import urls as note_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('user/', include('user.urls')),
+    path('anonymsg/', include('anonymsg.urls')),
     path('', include('main.urls')),
     path('forum/', include('forum.urls')),
+    path('note/',include(note_urls)),
+    path('todolist/', include('todolist.urls')),
+    path('schedule/', include('schedule.urls'))
 ]

@@ -56,9 +56,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
+<<<<<<< HEAD
     'user',
     'forum',
     'crispy_forms',
+=======
+    'todolist',
+    'user',
+    'note',
+    'schedule',
+    'anonymsg'
+>>>>>>> 3afbe81edf5f21e43043c2b0d494abeb18e92cdd
 ]
 
 MIDDLEWARE = [
@@ -179,9 +187,9 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'pbp.f02@gmail.com'
-EMAIL_HOST_PASSWORD = 'nico-nico-nii!!'
+EMAIL_HOST_USER = 'testdjangof02@gmail.com'
+EMAIL_HOST_PASSWORD = 'kucing132'
 EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = 'Admin Django <pbp.f02@gmail.com>'
-
-LOGIN_URL='/user/login/'
+LOGIN_URL = '/user/login/'
+DEFAULT_FROM_EMAIL = 'Admin Django <testdjangof02@gmail.com>'

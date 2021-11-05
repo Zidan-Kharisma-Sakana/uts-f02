@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% load static %}
+{% block custom_css %}
+<link rel="stylesheet" href="{% static 'css/schedule.css' %}" />
+<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock custom_css %}
+
+{% block content %}
+<section class="ftco-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center mb-5">
+                <h1 class="heading-section">Schedule</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="content w-100">
+                <div class="calendar-container">
+                  <div class="calendar"> 
+                    <div class="year-header"> 
+                      <span class="left-button fa fa-chevron-left" id="prev"> </span> 
+                      <span class="year" id="label"></span> 
+                      <span class="right-button fa fa-chevron-right" id="next"> </span>
+                    </div> 
+                    <table class="months-table w-100"> 
+                      <tbody>
+                        <tr class="months-row">
+                          <td class="month">Jan</td> 
+                          <td class="month">Feb</td> 
+                          <td class="month">Mar</td> 
+                          <td class="month">Apr</td> 
+                          <td class="month">May</td> 
+                          <td class="month">Jun</td> 
+                          <td class="month">Jul</td>
+                          <td class="month">Aug</td> 
+                          <td class="month">Sep</td> 
+                          <td class="month">Oct</td>          
+                          <td class="month">Nov</td>
+                          <td class="month">Dec</td>
+                        </tr>
+                      </tbody>
+                    </table> 
+                    
+                    <table class="days-table w-100"> 
+                      <td class="day">Sun</td> 
+                      <td class="day">Mon</td> 
+                      <td class="day">Tue</td> 
+                      <td class="day">Wed</td> 
+                      <td class="day">Thu</td> 
+                      <td class="day">Fri</td> 
+                      <td class="day">Sat</td>
+                    </table> 
+                    <div class="frame"> 
+                      <table class="dates-table w-100"> 
+                      <tbody class="tbody">             
+                      </tbody> 
+                      </table>
+                    </div> 
+                    <button class="button" id="add-button">Add Activity</button>
+                  </div>
+                </div>
+                <div class="events-container">
+                </div>
+                <div class="dialog overflow-auto" id="dialog">
+                    <h2 class="dialog-header">Add New Activity </h2>
+                    <form class="form" id="form" action="" method="POST">
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+        
+                        {{ form.source.errors }}
+                        {{ form.source }}
+
+                        <div class="form-container" align="center">
+                            <div>
+                                {{ form.activity.errors }}
+                                <label class="form-label" for="{{ form.activity.id_for_label }}">Activity Title</label>
+                                <p>{{ form.activity }}</p>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-4">
+                                    {{ form.start_time.errors }}
+                                    <label class="form-label" for="{{ form.start_time.id_for_label }}">Start</label>
+                                    <p>{{ form.start_time }}</p>
+                                </div>
+                                <div class="col-4">
+                                    {{ form.end_time.errors }}
+                                    <label class="form-label" for="{{ form.end_time.id_for_label }}">End</label>
+                                    <p>{{ form.end_time }}</p> 
+                                </div>
+                            </div>
+                            <div>
+                                {{ form.type.errors }}
+                                <label class="form-label" for="{{ form.type.id_for_label }}">Type</label>
+                                <p>{{ form.type }}</p>
+                            </div>
+                            <div>
+                                {{ form.desc.errors }}
+                                <label class="form-label" for="{{ form.desc.id_for_label }}">Description</label>
+                                <p>{{ form.desc }}</p>
+                            </div>
+
+                            {{ form.day }}
+                            {{ form.month }}
+                            {{ form.year }}
+
+                            <input type="button" value="Cancel" class="button" id="cancel-button">
+                            <input type="submit" value="Submit" class="button button-white" id="ok-button">    
+                        </div>
+                    </form>        
+                  </div>
+              </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src={% static 'js/schedule.js' %}></script>
+
+<script type=text/javascript>
+    var url_delete = "{% url 'delete' %}"
+
+    var dataJSON = JSON.parse("{{data|escapejs}}");
+    console.log(JSON.stringify(dataJSON));
+</script>
+{% endblock content %}

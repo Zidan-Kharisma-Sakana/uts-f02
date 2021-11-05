@@ -1,0 +1,20 @@
+
+
+<div class="container bootstrap snippets bootdey" >
+    <div class="row">
+        <ul class="notes">
+            {% for note in notes %}
+                <li>
+                    <div class= " navy-bg" >
+                        <small>{{ note.timestamp }}</small>
+                        <br>
+                        <h4>{{ note.title }}</h4>
+                        <p>{{ note.message}}</p>
+                        <a href="#" class="text-danger pull-right show-form-delete" data-url="{% url 'note:delete_message' note.id %}"=""><i class="fa fa-trash-o "></i></a>
+                    </div>
+                </li>   
+            {% endfor %}
+        </ul>  
+    </div>
+</div>
+
