@@ -1,54 +1,14 @@
 {% extends "base.html" %}
 
+{% load static %}
+{% block custom_css %}
+<link rel="stylesheet" href="{% static 'todolist.css' %}">
+{% endblock custom_css %}
+
 {% block content %}
 
-<style>
-    .header-bar {
-        display: flex;
-        justify-content: space-between;
-        color: #fff;
-        padding: 10px;
-        border-radius: 5px 5px 0 0;
-        background: #ffce67;
-        margin: auto;
-        width: 80%;
-    }
-
-    .header-bar a {
-        color: rgb(247, 247, 247);
-        text-decoration: none;
-    }
-    
-    .card-body {
-        padding: 20px;
-        background-color: #FFF3E4;
-        box-shadow: 2px 2px 13px -4px rgba(0, 0, 0, 0.21);
-        border-radius: 0 0 5px 5px;
-        margin: auto;
-        width: 80%;
-    }
-    .button {
-        border: 1px solid #ffce67;
-        background-color: #FFF;
-        color: #ffce67;
-        padding: 6px;
-        font-size: 14px;
-        border-radius: 5px;
-        cursor: pointer;
-        text-decoration: none;
-    }
-    input {
-        outline: none;
-        border: none;
-        padding: 10px;
-        border-radius: 4px;
-    }
-
-</style>
-
-
-<div class="header-bar">
-    <a href="{% url 'todolist' %}">&#8592; Back</a>
+<div class="header-bar-form">
+    <a class = 'back-button' href="{% url 'todolist' %}">&#8592; Back</a>
 </div>
     
     
@@ -67,7 +27,7 @@
         Deadline : <br>
         {{ form.deadline }} <br>
         <br>
-        <input class="button" type="submit" value="Submit">
+        <input class="button-submit" type="submit" value="Submit">
     </form>
 </div>
 {% endblock content %}
