@@ -1,4 +1,3 @@
-from django.db.models import fields
 from django.shortcuts import redirect
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
@@ -54,7 +53,6 @@ class TodoDetail(LoginRequiredMixin, DetailView):
 
 class TodoCreate(LoginRequiredMixin, CreateView):
     model = ToDoList
-    form = ToDoListForm
     fields = ['title', 'description', 'checklist', 'deadline']
     success_url = reverse_lazy('todolist')
     template_name = 'todolist/todolist_form.html'
