@@ -1,5 +1,12 @@
 body{margin-top:20px;}
 
+
+#drop_button {
+ 
+  position: relative;
+  left: 900px;
+  bottom: auto;
+}
 ul.notes li {
   margin: 10px 40px 50px 0px;
   float: left;
@@ -29,13 +36,16 @@ ul.notes li div p {
   height: 100px;
   width: 180px;
   font-size: 14px;
-  overflow: hidden;
   scrollbar-gutter: stable;
+  overflow: hidden;
+  
 }
 
 ul.notes p:hover{
   
+  
   overflow-y: auto;
+  
 
 }
 

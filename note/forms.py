@@ -8,7 +8,7 @@ class NoteForm(forms.ModelForm):
 	timestamp = forms.DateInput()
 	class Meta:
 		model = NoteModel
-		fields = ('title','timestamp','message')
+		fields = ('title','message')
 
 		
 
@@ -18,16 +18,12 @@ class NoteForm(forms.ModelForm):
 					'class':'form-control',
 					'placeholder':'max 13 character',}
 				),
-			'timestamp': forms.DateInput(
-				attrs = {
-					'class':'form-control',
-					'type' : 'date'
-					}
-				),
-
 			'message': forms.Textarea(
 				attrs = {
-					'class':'form-control',}
+					'class':'form-control',
+					'type' : 'text'
+					}
+					
 				),
 
 		}

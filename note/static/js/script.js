@@ -1,8 +1,8 @@
 $(document).ready(function(){
-	$('.show-form').click(function(){
-		console.log("data is saved")
+	var ShowForm = function(){
+		var btn= $(this)
 		$.ajax({
-			url:'add_message',
+			url:btn.attr("data-url"),
 			type:'get',
 			dataType:'json',
 			beforeSend: function(){
@@ -13,8 +13,8 @@ $(document).ready(function(){
 				$('#modal-note .modal-content').html(data.html_form);
 			}
 		});
-	});
-	$('#modal-note').on('submit','.create-form',function(){
+	};
+	var SaveForm =  function(){
 		var form = $(this);	
 		$.ajax({
 			url: form.attr('data-url'),
@@ -23,13 +23,25 @@ $(document).ready(function(){
 			dataType: 'json',
 			success: function(data){
 				if(data.form_is_valid){
-					console.log("data is saved 5")
+					$('#modal-table ul').html(data.note_list)
+					$('#modal-note').modal('hide');
 				} else{
-					console.log("data is saved 4")
+					
 					$('#modal-note .modal-content').html(data.html_form)
 				}
 			}
 		})
 		return false;
-	})
+	}
+
+//delete
+$('#modal-table').on("click",".show-form-delete",ShowForm);
+$('#modal-note').on("submit",".delete-form",SaveForm)
+
+//create
+//delete
+$('.show-form').click(ShowForm);
+$('#modal-note').on("submit",".create-form",SaveForm)
+
+
 });

@@ -7,31 +7,17 @@
 <link rel="stylesheet" href="{% static 'note/style.css' %}">
 {% endblock custom_css %}
 
+
 {% block meta %}
 <meta name="viewport" content="width=device-width, initial-scale=1">
 {% endblock meta %}
 
-{% block content %}
-
-  
-    <div class="container bootstrap snippets bootdey">
-        <div class="row">
-            <ul class="notes">
-                {% for note in notes %}
-                <li>
-                    <div class= {{ note.kelas }} >
-                        <small>{{ note.timestamp }}</small>
-                        <h4>{{ note.title }}</h4>
-                        <p>{{ note.message }}</p>
-                        <a href="#" class="text-danger pull-right"><i class="fa fa-trash-o "></i></a>
-                    </div>
-                </li>   
-                {% endfor %}
-            </ul>  
-        </div>
+{% block content %}    
+    <div class="container " id="modal-table">
+        {% include "note/index2.html" %}
     </div>
-  
-    <button class="btn btn-primary show-form" >
+    
+    <button class="btn btn-primary show-form" data-url="{% url 'note:add_message' %}" >
         <span class="glyphicon glyphicon-plus"></span>
         New Note
     </button>
