@@ -1,5 +1,4 @@
 from django import forms
-from django.db.models import fields
 from .models import ToDoList
 
 class ToDoListForm(forms.Form):
@@ -17,6 +16,18 @@ class ToDoListForm(forms.Form):
         'placeholder' : 'insert your description here here',
         'style' : 'width: 100%; padding: 10px 10px; box-sizing: border-box; border-radius: 4px; border : 1px solid #ccc;'
     }
+    check_attrs = {
+        'class' : 'onoffswitch',
+        'id' : 'myonoffswitch'
+    }
+    deadline_attrs = {
+        'type' : 'date'
+    }
 
     Title = forms.CharField(required=True, max_length=100, widget=forms.TextInput(attrs=title_attrs))
     Description = forms.CharField(required=False, max_length=300, widget=forms.Textarea(attrs=description_attrs))
+    Checklist = forms.BooleanField(widget=forms.CheckboxInput(attrs=check_attrs))
+    Deadline = forms.DateTimeField(required=True, widget=forms.DateInput(attrs=deadline_attrs))
+
+    def __init__(self):
+        super(ToDoListForm, self).__init__()
