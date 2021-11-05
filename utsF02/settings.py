@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'main',
     'user',
     'anonymsg',
+    'news',
 ]
 
 MIDDLEWARE = [

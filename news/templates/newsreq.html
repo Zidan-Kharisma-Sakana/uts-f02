@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+    <title>News Request</title>
+{% endblock meta %}
+
+{% block content %}
+    <center>
+
+    <h1>Request to Publish News</h1>
+    <br/><br/>
+    {% if submitted %}
+        Request Has Been Sent!
+
+    {% else %}
+        <form action="" method=POST>
+            {% csrf_token %}
+
+            {{ form.as_p }}
+            
+            <input type="submit" value="Submit" class="btn btn-secondary">
+        </form>
+    {% endif %}
+    </center>
+{% endblock %}
