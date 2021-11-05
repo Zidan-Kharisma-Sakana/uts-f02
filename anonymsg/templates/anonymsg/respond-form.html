@@ -1,0 +1,23 @@
+{% load static %}
+<button class="open-button" onclick="openForm()">Send a Response!</button>
+<div class="form-popup" id="myForm">
+    <form action="{% url 'edit-message' %}" class="form-container" method="POST">
+        {% csrf_token %}
+        <h5>Select question you want to answer:</h5>
+        <select name="anonymous_question">
+            {% if messages %}
+            {% for message in messages %}
+            <option value="{{ message.anonymous_question }}">{{ message.anonymous_question }}</option>
+            {% endfor %}
+            {% endif %}
+        </select>
+        <h5><label for="anonymous_answer">Type in your response:</label></h5>
+        <textarea name="anonymous_answer" rows="10" cols="40" placeholder="Type your message here..."></textarea>
+        <div>
+            <input type="submit" name="finalize" value="Save" class="btn btn-success">
+            <input type="submit" name="finalize" value="Delete" class="btn btn-danger">
+            <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+        </div>
+    </form>
+</div>
+<script src="{% static 'js/anonymsg/ask-respond.js' %}"></script>
