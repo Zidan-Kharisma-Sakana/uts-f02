@@ -11,4 +11,14 @@ urlpatterns = [
         name="anonymous-page-other",
     ),
     path("ask-page/<str:name>", views.AskView.as_view(), name="ask-page"),
+    
+    path("flutter", views.flutter_home, name="flutter-anonymsg"),
+    path("flutter-list-message", views.FlutterMyAnonymousView.as_view(), name="flutter-anonymous-page"),
+    path("flutter-edit-message", views.flutter_edit_message, name="flutter-edit-message"),
+    path(
+        "flutter-list-message/<str:name>",
+        views.FlutterOtherAnonymousView.as_view(),
+        name="flutter-anonymous-page-other",
+    ),
+    path("flutter-ask-page/<str:name>", views.FlutterAskView.as_view(), name="flutter-ask-page"),
 ]

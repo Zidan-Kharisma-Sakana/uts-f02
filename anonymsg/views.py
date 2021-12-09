@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http.response import HttpResponseRedirect
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -70,13 +71,6 @@ class OtherAnonymousView(LoginRequiredMixin, View):
 
 
 class AskView(View):
-    def get(self, request, name):
-        message_user = Profile.objects.get(name=name).user
-        context = {
-            "message_user_profile": message_user.profile,
-        }
-        return render(request, "anonymsg/ask-page.html", context)
-
     def post(self, request, name):
         user_id = request.user.id  # Get user id from request
         user = User.objects.get(id=user_id)
@@ -92,4 +86,69 @@ class AskView(View):
             return HttpResponseRedirect(
                 reverse("anonymous-page-other", args=(message_user.profile.name,))
             )
-        return render(request, "anonymsg/ask-page.html")
+
+@login_required(login_url="/user/login/")
+def flutter_home(request):
+    if request.user.is_superuser:
+        return HttpResponseRedirect("/admin/")
+    return HttpResponseRedirect(reverse("flutter-anonymous-page"))
+
+
+@login_required(login_url="/user/login/")
+def flutter_edit_message(request):
+    user_id = request.user.id
+    user = User.objects.get(id=user_id)
+    data = request.POST
+    messages = AnonymousMessage.objects.filter(user=user)
+    if not messages:
+        return HttpResponseRedirect(reverse("flutter-anonymsg"))
+    if request.method == "POST":
+        user_message = AnonymousMessage.objects.get(
+            user=user, anonymous_question=data["anonymous_question"]
+        )
+        if request.POST["finalize"] == "Save":
+            user_message.anonymous_answer = data["anonymous_answer"]
+            user_message.save()
+            return HttpResponseRedirect(reverse("flutter-anonymsg"))
+        elif request.POST["finalize"] == "Delete":
+            user_message.delete()
+            return HttpResponseRedirect(reverse("flutter-edit-message"))
+    context = {"messages": messages}
+    return render(request, "anonymsg/edit-message.html", context)
+
+
+class FlutterMyAnonymousView(LoginRequiredMixin, View):
+    def get(self, request):
+        user_id = request.user.id  # Get user id from request
+        messages = AnonymousMessage.objects.filter(user_id=user_id).all().values()
+        messages_list = list(messages)
+        return JsonResponse(messages_list, safe=False)
+
+
+class FlutterOtherAnonymousView(LoginRequiredMixin, View):
+    def get(self, request, name):
+        user_id = request.user.id  # Get user id from request
+        if name == User.objects.get(id=user_id).profile.name:
+            return HttpResponseRedirect(reverse("flutter-anonymous-page"))
+        message_user_id = Profile.objects.get(name=name).user.id
+        messages = AnonymousMessage.objects.filter(user_id=message_user_id).all().values()
+        messages_list = list(messages)
+        return JsonResponse(messages_list, safe=False)
+        
+
+
+class FlutterAskView(View):
+    def post(self, request, name):
+        user_id = request.user.id  # Get user id from request
+        if name == User.objects.get(id=user_id).profile.name:
+            return HttpResponseRedirect(reverse("flutter-anonymous-page"))
+        message_user = Profile.objects.get(name=name).user
+        updated_request = request.POST.copy()
+        updated_request.update({"user": message_user})
+        data = updated_request
+        form = AskForm(data or None)
+        if request.method == "POST" and form.is_valid:
+            form.save()
+            return HttpResponseRedirect(
+                reverse("flutter-anonymous-page-other", args=(message_user.profile.name,))
+            )
