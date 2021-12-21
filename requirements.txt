@@ -23,7 +23,6 @@ six==1.16.0
 sqlparse==0.4.2
 toml==0.10.2
 urllib3==1.26.6
-whitenoise==5.3.0
 wrapt==1.12.1
 django-cors-headers==3.10.0
 
