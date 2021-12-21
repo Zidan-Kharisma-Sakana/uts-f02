@@ -204,12 +204,16 @@ class MyStatusView(LoginRequiredMixin, View):
         })
 
     def get(self, request):
+        print("test")
+        request.session["testing"] = "hai hai"
+        
+        print("test")
         if request.user.is_superuser:
             return HttpResponseRedirect('/admin/')
         user_id = request.user.id
         user = User.objects.get(id=user_id).profile
         data = list_status(user, user)
-        print(data)
+        # print(data)
         return render(request, 'user/profile/status.html', {
             'data': data,
             'form': True,

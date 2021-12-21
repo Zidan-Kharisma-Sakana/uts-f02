@@ -1,8 +1,14 @@
 from django.urls import path
 from . import auth_views
 from . import views
+from .flutter_views import login_flutter, register_flutter, profile_flutter, edit_profile_flutter
 urlpatterns = [
     path('', views.home, name='user'),
+    path('flutter/login', login_flutter, name="flutter-login"),
+    path('flutter/register', register_flutter, name="flutter-register"),
+    path('flutter/profile/<str:username>', profile_flutter, name="flutter-profile"),
+    path('flutter/edit-profile/<str:username>', edit_profile_flutter, name="flutter-edit-profile"),
+
     path('friends/', views.FriendsView.as_view(), name="friends"),
     path('profile/', views.MyStatusView.as_view(), name='status'),
     path('profile/<str:name>', views.OtherStatusView.as_view(), name="status-other"),
