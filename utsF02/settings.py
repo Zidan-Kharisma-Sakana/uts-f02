@@ -187,9 +187,9 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # EMAIL_PORT=os.environ.get('EMAIL_PORT')
 
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'testdjangof02@gmail.com'
-EMAIL_HOST_PASSWORD = 'kucing132'
+EMAIL_HOST = 'smtp-relay.sendinblue.com'
+EMAIL_HOST_USER = 'rinhoshizora1nov@gmail.com'
+EMAIL_HOST_PASSWORD = 'y4zL2t7jNAfrWEJc'
 EMAIL_PORT = 587
 LOGIN_URL = '/user/login/'
 DEFAULT_FROM_EMAIL = 'Admin Django <testdjangof02@gmail.com>'
