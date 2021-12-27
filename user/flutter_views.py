@@ -20,8 +20,8 @@ def profile_flutter(request, username):
 
         return JsonResponse({
             "username": username,
-            "bod": profile.birthday or "",
-            "bio": profile.bio or "",
+            "bod": profile.birthday or "belum diatur",
+            "bio": profile.bio or "belum diatur",
             "email": profile.email
         }, status=200)
     else:
@@ -32,10 +32,12 @@ def edit_profile_flutter(request):
     data = json.loads(request.body)
     username=data['username']
     user = User.objects.get(username=username)
+    print(data['bod'])
     sleep(0)
+    # return JsonResponse({}, status=200)
     if user is not None:
         user_profile = Profile.objects.get(user=user)  # Mendapatkan profile berdasarkan user
-        user_profile.birthday = parse_date(data['birthday'])
+        user_profile.birthday = parse_date(data['bod'][:10])
         user_profile.bio = data['bio']
         user_profile.save() 
         return JsonResponse({}, status=200)
