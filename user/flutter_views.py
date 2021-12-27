@@ -12,7 +12,7 @@ def profile_flutter(request, username):
     print(username+"-------")
     # data = json.loads(request.body)
     user = User.objects.get(username=username)
-    sleep(0)
+    sleep(1)
     if user is not None:
         print(user.email)
         profile = Profile.objects.get(user=user)        
@@ -33,7 +33,7 @@ def edit_profile_flutter(request):
     username=data['username']
     user = User.objects.get(username=username)
     print(data['bod'])
-    sleep(0)
+    sleep(1)
     # return JsonResponse({}, status=200)
     if user is not None:
         user_profile = Profile.objects.get(user=user)  # Mendapatkan profile berdasarkan user
