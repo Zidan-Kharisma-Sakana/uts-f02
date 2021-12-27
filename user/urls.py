@@ -7,7 +7,7 @@ urlpatterns = [
     path('flutter/login', login_flutter, name="flutter-login"),
     path('flutter/register', register_flutter, name="flutter-register"),
     path('flutter/profile/<str:username>', profile_flutter, name="flutter-profile"),
-    path('flutter/edit-profile/<str:username>', edit_profile_flutter, name="flutter-edit-profile"),
+    path('flutter/edit-profile', edit_profile_flutter, name="flutter-edit-profile"),
 
     path('friends/', views.FriendsView.as_view(), name="friends"),
     path('profile/', views.MyStatusView.as_view(), name='status'),

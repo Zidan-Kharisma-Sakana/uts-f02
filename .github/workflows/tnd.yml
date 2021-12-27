@@ -63,43 +63,6 @@ jobs:
         name: functionaltest-coverage
         path: .coverage*
 
-  Coverage:
-    runs-on: ubuntu-latest
-    needs: [UnitTest, FunctionalTest]
-    steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python 3.8
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.8
-    - uses: actions/cache@v2
-      with:
-        path: ~/.cache/pip
-        key: pip-${{ github.job }}-${{ hashFiles('requirements.txt') }}
-        restore-keys: |
-          pip-
-    - name: Install coverage
-      run: pip install coverage
-    - name: Download unit test coverage
-      uses: actions/download-artifact@v2
-      with:
-        name: unittest-coverage
-    - name: Download functional test coverage
-      uses: actions/download-artifact@v2
-      with:
-        name: functionaltest-coverage
-    - name: Combine unit test and functional test coverage
-      run: coverage combine
-    - name: Show coverage report
-      run: coverage report -m
-    - name: Generate coverage report to HTML
-      run: coverage html
-    - name: Upload overall test coverage
-      uses: actions/upload-artifact@v2
-      with:
-        name: coverage
-        path: htmlcov/
-
   Deployment:
     if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
